@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/signup.dart';
 import 'package:lingolab/widgets/textfields.dart';
 
@@ -8,6 +9,12 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  bool _showPassword = false;
+  void _togglevisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     double appWidth = MediaQuery.of(context).size.width;
@@ -107,13 +114,46 @@ class _LogInState extends State<LogIn> {
     );
   }
 
-  Widget password(){
-    return CustomTextField(
-      hint:"Password",
-      icon: Icons.lock,
-    );
+//  Widget password(){
+//    return CustomTextField(
+//      hint:"Password",
+//      icon: Icons.lock,
+//    );
+//  }
+  Widget password() {
+    return Container(
+      padding: EdgeInsets.all(5),
+      width: MediaQuery.of(context).size.width*.92,
+      decoration: BoxDecoration(
+        color: Color(0xFFFf7f7f7),
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 7),
+            blurRadius: 12,
+            spreadRadius: 0,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+      child: TextField(
+        obscureText: !_showPassword,
+        decoration: InputDecoration(
+            prefixIcon: Icon(Icons.lock,color: Colors.deepOrangeAccent,),
+            border: InputBorder.none,
+            hintText: "Password",
+          suffixIcon: GestureDetector(
+            onTap: () {
+              _togglevisibility();
+            },
+            child: Icon(
+              _showPassword ? Icons.visibility : Icons
+                  .visibility_off, color: Colors.deepOrangeAccent,),
+          ),
+        ),
+      ),
+      );
   }
-
 
   Widget _divider() {
     return Container(
@@ -214,7 +254,10 @@ class _LogInState extends State<LogIn> {
   Widget forgotPassword() {
     return InkWell(
       onTap: () {
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ForgotPassword()),
+        );
       },
       child: Container(
 

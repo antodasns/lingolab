@@ -1,0 +1,85 @@
+import 'dart:async';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+
+class OtpWidget extends StatefulWidget {
+  final String phoneNumber;
+  OtpWidget(this.phoneNumber);
+  @override
+  _OtpWidgetState createState() => _OtpWidgetState();
+}
+
+class _OtpWidgetState extends State<OtpWidget> {
+  var onTapRecognizer;
+
+  TextEditingController textEditingController = TextEditingController();
+  // ..text = "123456";
+
+  StreamController<ErrorAnimationType> errorController;
+
+  bool hasError = false;
+  String currentText = "";
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    onTapRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        Navigator.pop(context);
+      };
+    errorController = StreamController<ErrorAnimationType>();
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    double appWidth = MediaQuery.of(context).size.width;
+    double appHeight = MediaQuery.of(context).size.height;
+    double boxappheight = appHeight * .05;
+    return Form(
+      key: formKey,
+      child: Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: 8.0, horizontal: 30),
+          child: PinCodeTextField(
+            textInputType: TextInputType.number,
+            textStyle: TextStyle(color: Colors.white,fontWeight:FontWeight.w900,fontSize: 18),
+            length: 4,
+            obsecureText: false,
+            animationType: AnimationType.fade,
+            validator: (v) {
+              if (v.length < 3) {
+                return "I'm from validator";
+              } else {
+                return null;
+              }
+            },
+            pinTheme: PinTheme(
+              shape: PinCodeFieldShape.circle,
+              fieldHeight: 50,
+              fieldWidth: 50,
+              activeColor: Colors.deepOrangeAccent,
+              activeFillColor:Colors.deepOrangeAccent,
+              inactiveColor: Colors.grey[300],
+              inactiveFillColor: Colors.grey[300],
+              selectedFillColor: Colors.grey[300],
+              selectedColor: Colors.grey[300],
+            ),
+            backgroundColor: Colors.white10,
+            enableActiveFill: true,
+            errorAnimationController: errorController,
+            controller: textEditingController,
+            onCompleted: (v) {
+              print("Completed");
+            },
+            onChanged: (value) {
+              print(value);
+              setState(() {
+                currentText = value;
+              });
+            },
+          )),
+    );
+  }
+}

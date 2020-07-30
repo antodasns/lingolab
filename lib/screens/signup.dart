@@ -8,12 +8,18 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-
+  bool _showPassword = false;
+  void _togglevisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
+  bool checkvalue=false;
   @override
   Widget build(BuildContext context) {
     double appWidth = MediaQuery.of(context).size.width;
     double appHeight = MediaQuery.of(context).size.height;
-    double boxappheight=(appHeight<=700)?appHeight*.02:(appHeight<=775)?appHeight*.03: appHeight*.04;
+    double boxappheight=(appHeight<=700)?appHeight*.03:(appHeight<=775)?appHeight*.04: appHeight*.05;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -80,9 +86,7 @@ class _SignUpState extends State<SignUp> {
                                   phone(),
                                   SizedBox(height: boxappheight),
                                   password(),
-                                  SizedBox(height: boxappheight),
-                                  confirmPassword(),
-                                  SizedBox(height: boxappheight),
+                                  acceptTermsTextRow(),
                                   submitButton(),
                                   _divider(),
                                   socialIconsRow(),
@@ -118,19 +122,71 @@ class _SignUpState extends State<SignUp> {
       icon: Icons.phone,
     );
   }
-  Widget password(){
-    return CustomTextField(
-      hint:"Password",
-      icon: Icons.lock,
-    );
-  }
-  Widget confirmPassword(){
-    return CustomTextField(
-      hint:"Confirm Password",
-      icon: Icons.lock,
+  Widget password() {
+    return Container(
+      padding: EdgeInsets.all(5),
+      width: MediaQuery.of(context).size.width*.92,
+      decoration: BoxDecoration(
+        color: Color(0xFFFf7f7f7),
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 7),
+            blurRadius: 12,
+            spreadRadius: 0,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+      child: TextField(
+        obscureText: !_showPassword,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.lock,color: Colors.deepOrangeAccent,),
+          border: InputBorder.none,
+          hintText: "Password",
+          suffixIcon: GestureDetector(
+            onTap: () {
+              _togglevisibility();
+            },
+            child: Icon(
+              _showPassword ? Icons.visibility : Icons
+                  .visibility_off, color: Colors.deepOrangeAccent,),
+          ),
+        ),
+      ),
     );
   }
 
+  Widget acceptTermsTextRow() {
+
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Checkbox(
+              activeColor: Colors.blue[400],
+              value: checkvalue,
+              onChanged: (bool newValue) {
+                setState(() {
+                  (checkvalue==false)?checkvalue=true:checkvalue=false;
+                });
+              }),
+          Text(
+            "I accept all ",
+            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+          ),
+          Text(
+            "terms and conditions",
+            style: TextStyle(
+                color: Colors.blueAccent,
+                fontWeight: FontWeight.w700,
+                fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
   Widget _divider() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -228,7 +284,9 @@ class _SignUpState extends State<SignUp> {
   }
   Widget submitButton(){
     return RaisedButton(
-      onPressed: (){},
+      onPressed: (){
+        Navigator.pushReplacementNamed(context, '/otp');
+      },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
       padding: EdgeInsets.all(0.0),
       child: Ink(
