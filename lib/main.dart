@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/loginpage.dart';
 import 'package:lingolab/screens/signup.dart';
-import 'package:lingolab/screens/verifyphone.dart';
 import 'package:lingolab/screens/otp.dart';
 
 void main() {
@@ -19,7 +18,6 @@ class LingoLab extends StatelessWidget {
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),
         "/forgotpassword":(context) => ForgotPassword(),
-        "/verifyphone":(context) => VerifyPhone(),
         "/otp":(context) => Otp(),
       },
     );

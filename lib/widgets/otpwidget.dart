@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'file:///C:/Users/ASUS/AndroidStudioProjects/lingolab/lib/widgets/timer.dart';
 
 class OtpWidget extends StatefulWidget {
   final String phoneNumber;
@@ -14,7 +16,6 @@ class _OtpWidgetState extends State<OtpWidget> {
   var onTapRecognizer;
 
   TextEditingController textEditingController = TextEditingController();
-  // ..text = "123456";
 
   StreamController<ErrorAnimationType> errorController;
 
@@ -31,6 +32,12 @@ class _OtpWidgetState extends State<OtpWidget> {
       };
     errorController = StreamController<ErrorAnimationType>();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    errorController.close();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -65,9 +72,12 @@ class _OtpWidgetState extends State<OtpWidget> {
               inactiveFillColor: Colors.grey[300],
               selectedFillColor: Colors.grey[300],
               selectedColor: Colors.grey[300],
+
             ),
+
             backgroundColor: Colors.white10,
             enableActiveFill: true,
+            autoDisposeControllers: false,
             errorAnimationController: errorController,
             controller: textEditingController,
             onCompleted: (v) {
