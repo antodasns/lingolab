@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lingolab/screens/dashboard.dart';
 import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/loginpage.dart';
 import 'package:lingolab/screens/signup.dart';
@@ -13,12 +14,13 @@ class LingoLab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/login",
+      initialRoute: "/dashboard",
       routes: {
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),
         "/forgotpassword":(context) => ForgotPassword(),
         "/otp":(context) => Otp(),
+        "/dashboard":(context) => Dashboard(),
       },
     );
   }

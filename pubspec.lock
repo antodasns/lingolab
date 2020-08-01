@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.3"
+  ff_navigation_bar:
+    dependency: "direct main"
+    description:
+      name: ff_navigation_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
   file:
     dependency: transitive
     description:
@@ -207,6 +214,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
+  outline_material_icons:
+    dependency: "direct main"
+    description:
+      name: outline_material_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   path:
     dependency: transitive
     description:
@@ -284,6 +305,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.13"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.3.1"
   quiver:
     dependency: transitive
     description:
@@ -417,4 +445,4 @@ packages:
     version: "3.6.1"
 sdks:
   dart: ">=2.8.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  flutter: ">=1.16.0 <2.0.0"

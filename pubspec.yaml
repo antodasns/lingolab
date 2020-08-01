@@ -30,6 +30,8 @@ dependencies:
   hexcolor: ^1.0.4
   intl_phone_number_input: ^0.4.6+2
   pin_code_fields: ^4.0.0
+  ff_navigation_bar: ^0.1.5
+  outline_material_icons: ^0.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
