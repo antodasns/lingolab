@@ -1,14 +1,16 @@
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:lingolab/widgets/subjectlist.dart';
 
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
 }
 class _DashboardState extends State<Dashboard> {
-  Widget appBarTitle = new Image.asset('assets/logo/lingolab.png', fit: BoxFit.contain,
-      height: 160);
+  Widget appBarTitle = new Image.asset('assets/logo/lingolab.png', fit: BoxFit.cover,
+      height: 160,width: 160);
   Icon actionIcon = new Icon(Icons.search,color: Colors.black54);
   int selectedIndex = 2;
 
@@ -20,350 +22,190 @@ class _DashboardState extends State<Dashboard> {
     double boxappheight2=(appHeight<=700)?appHeight*.1:(appHeight<=775)?appHeight*.09: appHeight*.09;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
         title: appBarTitle,
           actions: <Widget>[
-            Container(
-              height: 10,
-              width: 48,
-              padding: EdgeInsets.fromLTRB(0,10,10,10),
-              child: ClipOval(
-                child: Material(
-                  color: Colors.grey[300], // button color
-                  child: InkWell(
-                    splashColor: Colors.grey[300], // inkwell color
-                    child: SizedBox(width: 56, height: 56, child: actionIcon),
-                    onTap: () {
-                      setState(() {
-                        if ( this.actionIcon.icon == Icons.search){
-                          this.actionIcon = new Icon(Icons.close);
-                          this.appBarTitle = new TextField(
-                            autofocus: true,
-                            style: new TextStyle(
-                              color: Colors.black54,
-                            ),
-                            decoration: new InputDecoration(
-                                prefixIcon: new Icon(Icons.search,color: Colors.black54),
-                                hintText: "Search...",
-                                hintStyle: new TextStyle(color: Colors.black54)
-                            ),
-                          );}
-                        else {
-                          this.actionIcon = new Icon(Icons.search,color: Colors.black54);
-                          this.appBarTitle = new Image.asset('assets/logo/lingolab.png', fit: BoxFit.contain,
-                              height: 140);
-                        }
-                      });
-                    },
-                  ),
-                ),
-              ),
-            )
+            searchIcon(),
           ]
       ),
       body: Container(
-        color: Colors.white,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+        color: Colors.grey[100],
+        child: SingleChildScrollView(
+          child: Stack(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(18),
-                alignment: Alignment.topLeft,
-                child: Text('Hi, what would you learn today?',style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w800,
-                ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Container(
-                      height: boxappheight,
-                        width: appWidth*.45,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                stops: [
-                                  0.1,
-                                  0.8,
-                                ],
-                                colors: [
-                                  Colors.redAccent,
-                                  Colors.orangeAccent,
-                                ]),
-                          borderRadius: BorderRadius.circular(13),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 3,
-                              spreadRadius: 1,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                          CircleAvatar(
-                          radius: 20,
-                          backgroundImage: AssetImage("assets/logo/facebook.jpg"),
-                          ),
-                            Text("English",
-                              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.white),),
-                          ],
-                        )
-                    ),
-                    Container(
-                        height: boxappheight,
-                        width: appWidth*.45,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              stops: [
-                                0.5,
-                                1,
-                              ],
-                              colors: [
-                                Color(0xff364b6e),
-                                Colors.blue[800],
-                              ]),
-                          borderRadius: BorderRadius.circular(13),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 3,
-                              spreadRadius: 1,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage: AssetImage("assets/logo/facebook.jpg"),
-                            ),
-                            Text("German",
-                              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.white),),
-                          ],
-                        )
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Container(
-                        height: boxappheight,
-                        width: appWidth*.45,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              stops: [
-                                0.1,
-                                0.8,
-                              ],
-                              colors: [
-                                Colors.blue,
-                                Colors.lightBlueAccent,
-                              ]),
-                          borderRadius: BorderRadius.circular(13),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 3,
-                              spreadRadius: 1,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage: AssetImage("assets/logo/facebook.jpg"),
-                            ),
-                            Text("French",
-                              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.white),),
-                          ],
-                        )
-                    ),
-                    Container(
-                        height: boxappheight,
-                        width: appWidth*.45,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              stops: [
-                                0.1,
-                                0.9,
-                              ],
-                              colors: [
-                                Colors.green,
-                                Colors.greenAccent,
-                              ]),
-                          borderRadius: BorderRadius.circular(13),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 3,
-                              spreadRadius: 1,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage: AssetImage("assets/logo/facebook.jpg"),
-                            ),
-                            Text("Hindi",
-                              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.white),),
-                          ],
-                        )
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(18),
-                alignment: Alignment.topLeft,
-                child: Text('Practice,Perform,Perfect',style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w800,
-                ),
-                ),
-              ),
-
-              Container(
-                width: appWidth*.92,
-                  height: boxappheight2,
+              ClipPath(
+                clipper: WaveClipperTwo(flip: true),
+                child: Container(
+                  height: 500,
+                  width: appWidth,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(13),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
-                        spreadRadius: 1,
-                        color: Colors.grey,
-                      ),
-                    ],
+                    color: Colors.white
                   ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage("assets/logo/facebook.jpg"),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("Upcoming Weekly Test",
-                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800,color: Colors.black),),
-                        Text(" Start in",
-                          style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.grey),),
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(0,0,0,10),
-                      alignment: Alignment.bottomRight,
-                      width: appWidth*.25,
-                      height: appHeight*.1,
-                      child: Text("10h:25m:12s",
-                        style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.orange),),
-                    )
-                  ],
                 ),
               ),
-              SizedBox(height:15),
-              Container(
-                width: appWidth*.92,
-                height: boxappheight2,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(13),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0, 4),
-                      blurRadius: 4,
-                      spreadRadius: 1,
-                      color: Colors.grey,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage("assets/logo/facebook.jpg"),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0,110,0,0),
+                child: Container(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Text("Practice Test",
-                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800,color: Colors.black),),
-                        Text("20 Apr @ 9:30-12:00PM",
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,color: Colors.grey),),
-                      ],
-                    ),
-                    Container(
-                      child: RaisedButton(
-                        onPressed: () {
-                        },
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
-                        padding: const EdgeInsets.all(0.0),
-                        textColor: Colors.white,
-                        child: Container(
-                          padding: const EdgeInsets.fromLTRB(20,8,20,8),
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(topRight:  Radius.circular(50),topLeft:Radius.circular(50),bottomRight:  Radius.circular(50),bottomLeft:Radius.circular(50) ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              stops: [0.1, 0.3,],
-                              colors: <Color>[
-                                Colors.redAccent,
-                                Colors.deepOrangeAccent,
-                              ],
-                            ),
-                          ),
-                          child: const Text(
-                              'Take Test',
-                              style: TextStyle(fontSize: 16)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20,0,20,20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              SubjectList(imglocation:"assets/logo/english.png",subjectname:"English"),
+                              SubjectList(imglocation:"assets/logo/german.png",subjectname:"German"),
+                            ],
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20,0,20,0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              SubjectList(imglocation:"assets/logo/french.png",subjectname:"French"),
+                              SubjectList(imglocation:"assets/logo/hindi.png",subjectname:"Hindi"),
+                            ],
+                          ),
+                        ),
+
+//    Area below Wave.....................................................
+
+                        Container(
+                          padding: EdgeInsets.fromLTRB(20,55,20,20),
+                          alignment: Alignment.topLeft,
+                          child: Text('Practice,Perform,Perfect',style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                          ),
+                          ),
+                        ),
+
+                        Container(
+                          width: appWidth*.92,
+                          height: boxappheight2,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(13),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 1,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundImage: AssetImage("assets/logo/weeklytest.png"),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text("Upcoming Weekly Test",
+                                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.black),),
+                                  Text(" Start in",
+                                    style: TextStyle(fontSize: 13,fontWeight: FontWeight.w800,color: Colors.grey),),
+                                ],
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(0,0,0,10),
+                                alignment: Alignment.bottomRight,
+                                width: appWidth*.25,
+                                height: appHeight*.1,
+                                child: Text("10h:25m:12s",
+                                  style: TextStyle(fontSize: 13,fontWeight: FontWeight.w800,color: Colors.orange),),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(height:15),
+                        Container(
+                          width: appWidth*.92,
+                          height: boxappheight2,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(13),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 1,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundImage: AssetImage("assets/logo/practicetest.png"),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text("Practice Test",
+                                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.black),),
+                                  Text("20 Apr @ 9:30-12:00PM",
+                                    style: TextStyle(fontSize: 13,fontWeight: FontWeight.w800,color: Colors.grey),),
+                                ],
+                              ),
+                              Container(
+                                child: RaisedButton(
+                                  onPressed: () {
+                                  },
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
+                                  padding: const EdgeInsets.all(0.0),
+                                  textColor: Colors.white,
+                                  child: Container(
+                                    padding: const EdgeInsets.fromLTRB(20,8,20,8),
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(topRight:  Radius.circular(50),topLeft:Radius.circular(50),bottomRight:  Radius.circular(50),bottomLeft:Radius.circular(50) ),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        stops: [0.1, 0.3,],
+                                        colors: <Color>[
+                                          Colors.redAccent,
+                                          Colors.deepOrangeAccent,
+                                        ],
+                                      ),
+                                    ),
+                                    child: const Text(
+                                        'Take Test',
+                                        style: TextStyle(fontSize: 15)
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height:80),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              )
             ],
           ),
         ),
       ),
+
+
+
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
           barBackgroundColor: Colors.white,
@@ -407,6 +249,48 @@ class _DashboardState extends State<Dashboard> {
             selectedBackgroundColor: Colors.deepOrangeAccent,
           ),
         ],
+      ),
+    );
+  }
+
+
+
+
+  Widget searchIcon(){
+    return Container(
+      height: 10,
+      width: 48,
+      padding: EdgeInsets.fromLTRB(0,10,10,10),
+      child: ClipOval(
+        child: Material(
+          color: Colors.grey[300], // button color
+          child: InkWell(
+            splashColor: Colors.grey[300], // inkwell color
+            child: SizedBox(width: 56, height: 56, child: actionIcon),
+            onTap: () {
+              setState(() {
+                if ( this.actionIcon.icon == Icons.search){
+                  this.actionIcon = new Icon(Icons.close);
+                  this.appBarTitle = new TextField(
+                    autofocus: true,
+                    style: new TextStyle(
+                      color: Colors.black54,
+                    ),
+                    decoration: new InputDecoration(
+                        prefixIcon: new Icon(Icons.search,color: Colors.black54),
+                        hintText: "Search...",
+                        hintStyle: new TextStyle(color: Colors.black54)
+                    ),
+                  );}
+                else {
+                  this.actionIcon = new Icon(Icons.search,color: Colors.black54);
+                  this.appBarTitle = new Image.asset('assets/logo/lingolab.png', fit: BoxFit.cover,
+                      height: 160,width: 160);
+                }
+              });
+            },
+          ),
+        ),
       ),
     );
   }
