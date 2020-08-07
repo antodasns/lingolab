@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 class LevelList extends StatefulWidget {
   final String level;
   final String leveldisc;
-  const LevelList ({Key key,this.level,this.leveldisc}):super(key:key);
+  final String imgloc;
+  const LevelList ({Key key,this.level,this.leveldisc,this.imgloc}):super(key:key);
   @override
   _LevelListState createState() => _LevelListState();
 }
@@ -20,17 +21,7 @@ class _LevelListState extends State<LevelList> {
       width: appWidth*.92,
       height: boxappheight2,
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.1,
-                1,
-              ],
-              colors: [
-                Colors.redAccent,
-                Colors.orange,
-              ]),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(13),
         boxShadow: [
           BoxShadow(
@@ -46,16 +37,16 @@ class _LevelListState extends State<LevelList> {
         children: <Widget>[
           CircleAvatar(
             radius: 25,
-            backgroundImage: AssetImage("assets/logo/practicetest.png"),
+            backgroundImage: AssetImage(widget.imgloc),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(widget.level,
-                style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800,color: Colors.white),),
+                style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800,color: Colors.black),),
               Text(widget.leveldisc,
-                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
+                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.grey),),
             ],
           ),
           Container(

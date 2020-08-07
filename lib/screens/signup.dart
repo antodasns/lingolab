@@ -38,7 +38,8 @@ class _SignUpState extends State<SignUp> {
                 colors: [
                   Colors.redAccent,
                   Colors.deepOrangeAccent,
-                ])
+                ]
+                )
             ),
                 ),
                 Padding(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lingolab/screens/coursedetails.dart';
 import 'package:lingolab/screens/courselevels.dart';
 import 'package:lingolab/screens/dashboard.dart';
 import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/loginpage.dart';
+import 'package:lingolab/screens/payment.dart';
 import 'package:lingolab/screens/signup.dart';
 import 'package:lingolab/screens/otp.dart';
 
@@ -15,7 +17,7 @@ class LingoLab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/courselevels",
+      initialRoute: "/payment",
       routes: {
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),
@@ -23,6 +25,8 @@ class LingoLab extends StatelessWidget {
         "/otp":(context) => Otp(),
         "/dashboard":(context) => Dashboard(),
         "/courselevels":(context) => Courselevels(),
+        "/coursedetail":(context) => CourseDetail(),
+        "/payment":(context) => Payment(),
       },
     );
   }
