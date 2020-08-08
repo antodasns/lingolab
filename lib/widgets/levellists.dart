@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lingolab/screens/coursedetails.dart';
 
 class LevelList extends StatefulWidget {
   final String level;
@@ -17,42 +18,50 @@ class _LevelListState extends State<LevelList> {
     double appHeight = MediaQuery.of(context).size.height;
     double boxappheight=(appHeight<=700)?appHeight*.12:(appHeight<=775)?appHeight*.11: appHeight*.10;
     double boxappheight2=(appHeight<=700)?appHeight*.1:(appHeight<=775)?appHeight*.09: appHeight*.09;
-    return Container(
-      width: appWidth*.92,
-      height: boxappheight2,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(13),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 4,
-            spreadRadius: 1,
-            color: Colors.grey,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          CircleAvatar(
-            radius: 25,
-            backgroundImage: AssetImage(widget.imgloc),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(widget.level,
-                style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800,color: Colors.black),),
-              Text(widget.leveldisc,
-                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.grey),),
-            ],
-          ),
-          Container(
-              child: Icon(Icons.keyboard_arrow_right)
-          ),
-        ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) =>
+            CourseDetail(level: widget.level,imgloc: widget.imgloc,)
+        ));
+      },
+      child: Container(
+        width: appWidth*.92,
+        height: boxappheight2,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(13),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 4),
+              blurRadius: 4,
+              spreadRadius: 1,
+              color: Colors.grey,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            CircleAvatar(
+              radius: 25,
+              backgroundImage: AssetImage(widget.imgloc),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(widget.level,
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800,color: Colors.black),),
+                Text(widget.leveldisc,
+                  style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.grey),),
+              ],
+            ),
+            Container(
+                child: Icon(Icons.keyboard_arrow_right)
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lingolab/widgets/levellists.dart';
 class Courselevels extends StatefulWidget {
+  final String imglocation;
+  final String subjectname;
+  const Courselevels ({Key key,this.imglocation,this.subjectname}):super(key:key);
   @override
   _CourselevelsState createState() => _CourselevelsState();
 }
@@ -32,14 +35,13 @@ class _CourselevelsState extends State<Courselevels> {
           ],
         ),
       body: Container(
-
         decoration: BoxDecoration(
             color: Colors.white,
             image: DecorationImage(image: AssetImage("assets/images/bgimage.jpg"),
                 fit: BoxFit.cover,
               colorFilter: new ColorFilter.mode(Colors.white.withOpacity(0.09), BlendMode.dstATop),
             )
-                
+
         ),
         child: Column(
           children: <Widget>[
@@ -66,7 +68,7 @@ class _CourselevelsState extends State<Courselevels> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                          children: <Widget>[
-                           Text("Physics",
+                           Text(widget.subjectname,
                              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800,color: Colors.white),),
                            SizedBox(height: 10),
                            Row(
@@ -87,7 +89,7 @@ class _CourselevelsState extends State<Courselevels> {
                           padding: EdgeInsets.fromLTRB(0,0,10,10),
                           child: CircleAvatar(
                             radius: 40,
-                            backgroundImage: AssetImage("assets/logo/german.png"),
+                            backgroundImage: AssetImage(widget.imglocation),
                             backgroundColor: Colors.transparent,
                           ),
                       ),

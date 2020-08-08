@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lingolab/screens/coursedetailtheme.dart';
+import 'package:lingolab/screens/payment.dart';
 import 'package:lingolab/widgets/coursecurriculum.dart';
 
 class CourseDetail extends StatefulWidget {
+  final String level;
+  final String imgloc;
+  const CourseDetail ({Key key,this.level,this.imgloc}):super(key:key);
   @override
   _CourseDetailState createState() => _CourseDetailState();
 }
@@ -66,13 +70,13 @@ class _CourseDetailState extends State<CourseDetail>
                         Padding(
                           padding:const EdgeInsets.only(
                               top: 32.0, left: 18, right: 16),
-                          child: Image.asset('assets/logo/A1.png'),
+                          child: Image.asset(widget.imgloc),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 32.0, left: 18, right: 16),
                           child: Text(
-                            'English (Beginner)',
+                            'English ('+widget.level+')',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -290,16 +294,24 @@ class _CourseDetailState extends State<CourseDetail>
                           blurRadius: 10.0),
                     ],
                   ),
-                  child: Center(
-                    child: Text(
-                      'Join Course',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        letterSpacing: 0.0,
-                        color: DesignCourseAppTheme
-                            .nearlyWhite,
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) =>
+                          Payment()
+                      ));
+                    },
+                    child: Center(
+                      child: Text(
+                        'Join Course',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          letterSpacing: 0.0,
+                          color: DesignCourseAppTheme
+                              .nearlyWhite,
+                        ),
                       ),
                     ),
                   ),
