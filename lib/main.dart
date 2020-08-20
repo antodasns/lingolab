@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lingolab/screens/activecourse.dart';
+import 'package:lingolab/screens/chaptersandtests.dart';
+import 'package:lingolab/screens/videoplayback.dart';
+import 'package:lingolab/screens/videosandebooks.dart';
 import 'package:lingolab/screens/coursedetails.dart';
 import 'package:lingolab/screens/courselevels.dart';
 import 'package:lingolab/screens/dashboard.dart';
@@ -19,7 +21,7 @@ class LingoLab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/activecourse",
+      initialRoute: "/videoplayback",
       routes: {
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),
@@ -31,6 +33,8 @@ class LingoLab extends StatelessWidget {
         "/payment":(context) => Payment(),
         "/detail":(context) => DetailScreen(),
         "/activecourse":(context) => ActiveCourse(),
+        "/chpterdetails":(context) => ChapterDetails(),
+        "/videoplayback":(context) => VideoPlayback(),
       },
     );
   }

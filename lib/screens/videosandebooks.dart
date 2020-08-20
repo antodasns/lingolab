@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lingolab/widgets/chaptersandtests.dart';
+import 'package:lingolab/widgets/activecoursewidgets.dart';
 
 
-class ActiveCourse extends StatefulWidget {
+class ChapterDetails extends StatefulWidget {
   @override
-  _ActiveCourseState createState() => _ActiveCourseState();
+  _ChapterDetailsState createState() => _ChapterDetailsState();
 }
 
-class _ActiveCourseState extends State<ActiveCourse> {
+class _ChapterDetailsState extends State<ChapterDetails> {
   Icon actionIcon = new Icon(Icons.search,color: Colors.black54);
   Widget appBarTitle;
   String selectedoption="chapters";
@@ -60,14 +60,14 @@ class _ActiveCourseState extends State<ActiveCourse> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("English",
+                          Text("Introduction",
                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800,color: Colors.white),),
                           SizedBox(height: 10),
                           Row(
                             children: <Widget>[
-                              Text("60 Chapters | ",
+                              Text("60 Videos | ",
                                 style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
-                              Text("35 Tests",
+                              Text("35 E-Books",
                                 style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
                             ],
                           )
@@ -96,21 +96,21 @@ class _ActiveCourseState extends State<ActiveCourse> {
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      border: BorderDirectional(bottom: BorderSide(color:chaplinecolor,width: 1.5))
+                        border: BorderDirectional(bottom: BorderSide(color:chaplinecolor,width: 1.5))
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: GestureDetector(
                         onTap: (){
                           setState(() {
-                            selectedoption ="chapters";
+                            selectedoption ="videos";
                             chaplinecolor = Colors.redAccent;
                             chapheadcolor = Colors.redAccent;
                             testlinecolor = Colors.white;
                             testheadcolor = Colors.black;
                           });
                         },
-                        child: Text("Chapters",style: TextStyle(fontSize: 15,color: chapheadcolor,
+                        child: Text("Videos",style: TextStyle(fontSize: 15,color: chapheadcolor,
                             fontWeight: FontWeight.w900)),
                       ),
                     ),
@@ -123,17 +123,16 @@ class _ActiveCourseState extends State<ActiveCourse> {
                   child: Padding(
                     padding: const EdgeInsets.all(3.0),
                     child: GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          selectedoption ="tests";
-                          chaplinecolor = Colors.white;
-                          chapheadcolor = Colors.black;
-                          testlinecolor = Colors.redAccent;
-                          testheadcolor = Colors.redAccent;
-
-                        });
-                      },
-                        child: Text("Tests",style: TextStyle(fontSize: 15,color: testheadcolor,
+                        onTap: (){
+                          setState(() {
+                            selectedoption ="ebooks";
+                            chaplinecolor = Colors.white;
+                            chapheadcolor = Colors.black;
+                            testlinecolor = Colors.redAccent;
+                            testheadcolor = Colors.redAccent;
+                          });
+                        },
+                        child: Text("E-books",style: TextStyle(fontSize: 15,color: testheadcolor,
                             fontWeight: FontWeight.w900)
                         )
                     ),
@@ -141,26 +140,26 @@ class _ActiveCourseState extends State<ActiveCourse> {
                 ),
               ],
             ),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest()
+            videosandebook(),
+            videosandebook(),
+            videosandebook(),
+            videosandebook(),
+            videosandebook(),
+            videosandebook(),
+            videosandebook()
           ],
         ),
       ),
     );
   }
-Widget chaptersandtest(){
-    if (selectedoption=="chapters"){
-    return Chapters(chaptername: "Introductionfsbgds",);
+  Widget videosandebook(){
+    if (selectedoption=="videos"){
+      return Videos(chaptername: "Introductionfsbgds",);
     }
     else{
-      return Tests(chaptername: "test",);
+      return Ebook(chaptername: "Notes",);
     }
-}
+  }
 
   Widget searchIcon(){
     return Container(
