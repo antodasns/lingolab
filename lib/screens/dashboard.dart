@@ -58,8 +58,8 @@ class _DashboardState extends State<Dashboard> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              SubjectList(imglocation:"assets/logo/english.png",subjectname:"English"),
-                              SubjectList(imglocation:"assets/logo/german.png",subjectname:"German"),
+                              SubjectList(imglocation:"assets/logo/english.png",subjectname:"Englishaa"),
+                              SubjectList(imglocation:"assets/logo/german.png",subjectname:"Germanaa"),
                             ],
                           ),
                         ),
@@ -68,8 +68,8 @@ class _DashboardState extends State<Dashboard> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              SubjectList(imglocation:"assets/logo/french.png",subjectname:"French"),
-                              SubjectList(imglocation:"assets/logo/hindi.png",subjectname:"Hindi"),
+                              SubjectList(imglocation:"assets/logo/french.png",subjectname:"Frenchaa"),
+                              SubjectList(imglocation:"assets/logo/hindi.png",subjectname:"Hindiaa"),
                             ],
                           ),
                         ),
@@ -79,7 +79,7 @@ class _DashboardState extends State<Dashboard> {
                         Container(
                           padding: EdgeInsets.fromLTRB(20,55,20,20),
                           alignment: Alignment.topLeft,
-                          child: Text('Practice,Perform,Perfect',style: TextStyle(
+                          child: Text('Practice,Perform,Perfectaa',style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w800,
                           ),
