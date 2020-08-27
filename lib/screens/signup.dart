@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lingolab/screens/loginpage.dart';
@@ -8,6 +10,17 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  SigningUp signingUp =SigningUp();
+  GlobalKey<FormState>_formKey = GlobalKey();
+  FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
+  save(){
+    print("hellol");
+    print(signingUp.email);
+    print(signingUp.password);
+    print(_firebaseAuth.currentUser);
+    print(_firebaseAuth.currentUser.uid);
+    _firebaseAuth.createUserWithEmailAndPassword(email: signingUp.email, password: signingUp.password);
+  }
   bool _showPassword = false;
   void _togglevisibility() {
     setState(() {
@@ -70,29 +83,32 @@ class _SignUpState extends State<SignUp> {
                           child:SingleChildScrollView(
                             child: Padding(
                               padding: EdgeInsets.all(0),
-                              child: Column(
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
 
-                                children: <Widget>[
-                                  SizedBox(height: 10),
-                                  Text("SignUp",
-                                    style: TextStyle(fontSize:30.0 ,
-                                        fontWeight: FontWeight.w900,
-                                      color: Color(0xFFF616161),)
-                                  ),
-                                  SizedBox(height: boxappheight),
-                                  fullName(),
-                                  SizedBox(height: boxappheight),
-                                  email(),
-                                  SizedBox(height: boxappheight),
-                                  phone(),
-                                  SizedBox(height: boxappheight),
-                                  password(),
-                                  acceptTermsTextRow(),
-                                  submitButton(),
-                                  _divider(),
-                                  socialIconsRow(),
-                                  _createAccountLabel(),
-                                ],
+                                  children: <Widget>[
+                                    SizedBox(height: 10),
+                                    Text("SignUp",
+                                      style: TextStyle(fontSize:30.0 ,
+                                          fontWeight: FontWeight.w900,
+                                        color: Color(0xFFF616161),)
+                                    ),
+                                    SizedBox(height: boxappheight),
+                                    fullName(),
+                                    SizedBox(height: boxappheight),
+                                    email(),
+                                    SizedBox(height: boxappheight),
+                                    phone(),
+                                    SizedBox(height: boxappheight),
+                                    password(),
+                                    acceptTermsTextRow(),
+                                    submitButton(),
+                                    _divider(),
+                                    socialIconsRow(),
+                                    _createAccountLabel(),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -107,20 +123,44 @@ class _SignUpState extends State<SignUp> {
   }
   Widget fullName(){
     return CustomTextField(
-      hint:"Full Name",
-      icon: Icons.account_circle,
+      field: TextField(
+        onChanged: (value) {
+          signingUp.fullname = value;
+        },
+        decoration: InputDecoration(
+            prefixIcon: Icon(Icons.account_circle,color: Colors.deepOrangeAccent,),
+            border: InputBorder.none,
+            hintText: "Full Name"),
+      ),
     );
   }
   Widget email(){
     return CustomTextField(
-      hint:"Email ID",
-      icon: Icons.email,
+      field: TextField(
+        onChanged: (value) {
+          signingUp.email = value;
+        },
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            prefixIcon: Icon(Icons.email,color: Colors.deepOrangeAccent,),
+            border: InputBorder.none,
+            hintText: "Email ID"),
+      ),
     );
   }
   Widget phone(){
     return CustomTextField(
-      hint:"Phone No",
-      icon: Icons.phone,
+      field: TextField(
+        onChanged: (value) {
+          signingUp.phoneno = value;
+        },
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+            prefixIcon: Icon(Icons.phone,color: Colors.deepOrangeAccent,),
+            border: InputBorder.none,
+            hintText: "Phone No"),
+
+      ),
     );
   }
   Widget password() {
@@ -140,6 +180,9 @@ class _SignUpState extends State<SignUp> {
         ],
       ),
       child: TextField(
+        onChanged: (value) {
+          signingUp.password = value;
+        },
         obscureText: !_showPassword,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.lock,color: Colors.deepOrangeAccent,),
@@ -286,6 +329,7 @@ class _SignUpState extends State<SignUp> {
   Widget submitButton(){
     return RaisedButton(
       onPressed: (){
+        save();
         Navigator.pushReplacementNamed(context, '/otp');
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
@@ -315,4 +359,18 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+}
+
+class SigningUp{
+  String fullname;
+  String email;
+  String phoneno;
+  String password;
+
+  SigningUp({
+    this.fullname,
+    this.email,
+    this.phoneno,
+    this.password
+  });
 }

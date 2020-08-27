@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lingolab/screens/chaptersandtests.dart';
 import 'package:lingolab/screens/videoplayback.dart';
@@ -12,7 +13,9 @@ import 'package:lingolab/screens/paymentsuccess.dart';
 import 'package:lingolab/screens/signup.dart';
 import 'package:lingolab/screens/otp.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(LingoLab());
 }
 
@@ -21,7 +24,7 @@ class LingoLab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/login",
+      initialRoute: "/signup",
       routes: {
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),

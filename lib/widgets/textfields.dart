@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:lingolab/screens/signup.dart';
 
 
 class CustomTextField extends StatefulWidget {
   final String hint;
   final IconData icon;
+  final  Widget field;
 
-  const CustomTextField ({ Key key, this.hint,this.icon }): super(key: key);
+  const CustomTextField ({ Key key, this.hint,this.icon,this.field}): super(key: key);
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,13 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
         ],
       ),
-      child: TextField(
-        decoration: InputDecoration(
-            prefixIcon: Icon(widget.icon,color: Colors.deepOrangeAccent,),
-            border: InputBorder.none,
-            hintText: widget.hint),
-
-      ),
+      child: widget.field
     );
   }
 }
