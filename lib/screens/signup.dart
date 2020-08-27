@@ -13,14 +13,14 @@ class _SignUpState extends State<SignUp> {
   SigningUp signingUp =SigningUp();
   GlobalKey<FormState>_formKey = GlobalKey();
   FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
-  save(){
-    print("hellol");
-    print(signingUp.email);
-    print(signingUp.password);
-    print(_firebaseAuth.currentUser);
-    print(_firebaseAuth.currentUser.uid);
-    _firebaseAuth.createUserWithEmailAndPassword(email: signingUp.email, password: signingUp.password);
+  save()async{
+    await _firebaseAuth.createUserWithEmailAndPassword(email: signingUp.email, password: signingUp.password)
+    .then((user){
+      print('signed in as ${user.user.uid}');
+    });
+    _firebaseAuth.verifyPhoneNumber(phoneNumber: null, verificationCompleted: null, verificationFailed: null, codeSent: null, codeAutoRetrievalTimeout: null);
   }
+
   bool _showPassword = false;
   void _togglevisibility() {
     setState(() {
