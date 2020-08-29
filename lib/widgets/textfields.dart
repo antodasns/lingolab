@@ -5,9 +5,11 @@ import 'package:lingolab/screens/signup.dart';
 class CustomTextField extends StatefulWidget {
   final String hint;
   final IconData icon;
-  final  Widget field;
+  final TextEditingController textEditingController;
+  final TextInputType keyboardType;
+  final Function onPressed;
 
-  const CustomTextField ({ Key key, this.hint,this.icon,this.field}): super(key: key);
+  const CustomTextField ({ Key key, this.hint,this.icon,this.textEditingController,this.keyboardType,this.onPressed}): super(key: key);
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
 }
@@ -31,7 +33,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
         ],
       ),
-      child: widget.field
+      child: TextFormField(
+        onChanged: widget.onPressed,
+        controller: widget.textEditingController,
+        keyboardType: widget.keyboardType,
+        decoration: InputDecoration(
+            prefixIcon: Icon(widget.icon,color: Colors.deepOrangeAccent,),
+            border: InputBorder.none,
+            hintText: widget.hint),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lingolab/screens/loginpage.dart';
+import 'package:lingolab/screens/otp.dart';
 import 'package:lingolab/widgets/textfields.dart';
 class SignUp extends StatefulWidget {
   @override
@@ -10,6 +11,11 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  TextEditingController fullnameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   SigningUp signingUp =SigningUp();
   GlobalKey<FormState>_formKey = GlobalKey();
   FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
@@ -18,7 +24,13 @@ class _SignUpState extends State<SignUp> {
     .then((user){
       print('signed in as ${user.user.uid}');
     });
-    _firebaseAuth.verifyPhoneNumber(phoneNumber: null, verificationCompleted: null, verificationFailed: null, codeSent: null, codeAutoRetrievalTimeout: null);
+    _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: null,
+        verificationCompleted: null,
+        verificationFailed: null,
+        codeSent: null,
+        codeAutoRetrievalTimeout: null
+    );
   }
 
   bool _showPassword = false;
@@ -123,44 +135,35 @@ class _SignUpState extends State<SignUp> {
   }
   Widget fullName(){
     return CustomTextField(
-      field: TextField(
-        onChanged: (value) {
-          signingUp.fullname = value;
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(Icons.account_circle,color: Colors.deepOrangeAccent,),
-            border: InputBorder.none,
-            hintText: "Full Name"),
-      ),
+      hint:"Full Name",
+      icon: Icons.account_circle,
+      keyboardType: TextInputType.text,
+      textEditingController: fullnameController,
+      onPressed: (value) {
+        signingUp.fullname = value;
+      },
     );
   }
   Widget email(){
     return CustomTextField(
-      field: TextField(
-        onChanged: (value) {
-          signingUp.email = value;
-        },
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            prefixIcon: Icon(Icons.email,color: Colors.deepOrangeAccent,),
-            border: InputBorder.none,
-            hintText: "Email ID"),
-      ),
+      hint:"Email ID",
+      icon: Icons.email,
+      keyboardType: TextInputType.emailAddress,
+      textEditingController: emailController,
+      onPressed: (value) {
+        signingUp.email = value;
+      },
     );
   }
   Widget phone(){
     return CustomTextField(
-      field: TextField(
-        onChanged: (value) {
-          signingUp.phoneno = value;
-        },
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-            prefixIcon: Icon(Icons.phone,color: Colors.deepOrangeAccent,),
-            border: InputBorder.none,
-            hintText: "Phone No"),
-
-      ),
+      hint:"Phone No",
+      icon: Icons.phone,
+      keyboardType: TextInputType.phone,
+      textEditingController: phoneController,
+      onPressed: (value) {
+        signingUp.phoneno = value;
+      },
     );
   }
   Widget password() {
@@ -330,6 +333,16 @@ class _SignUpState extends State<SignUp> {
     return RaisedButton(
       onPressed: (){
         save();
+        var route = new MaterialPageRoute(
+          builder: (BuildContext context) =>
+          new Otp(name: fullnameController.text,
+          email: emailController.text,
+            phone:phoneController.text,
+              password: passwordController.text
+            ),
+        );
+        Navigator.of(context).push(route);
+
         Navigator.pushReplacementNamed(context, '/otp');
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),

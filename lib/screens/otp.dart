@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:lingolab/widgets/timer.dart';
 import 'package:lingolab/widgets/otpwidget.dart';
 class Otp extends StatefulWidget {
+  final String name;
+  final String email;
+  final String phone;
+  final String password;
+  const Otp ({ Key key, this.name,this.email,this.phone,this.password}): super(key: key);
+
   @override
   _OtpState createState() => _OtpState();
 }
 class _OtpState extends State<Otp> {
   @override
   Widget build(BuildContext context) {
+    String Name=widget.name;
+    String Email=widget.email;
     double appWidth = MediaQuery.of(context).size.width;
     double appHeight = MediaQuery.of(context).size.height;
     double boxappheight = appHeight * .05;
@@ -36,7 +44,7 @@ class _OtpState extends State<Otp> {
                 ),
                 SizedBox(height: boxappheight),
                 Text(
-                    "We have sent you an SMS with a code to number +91 0001110001",
+                    "We have sent you an SMS with a code to number +91 0001110001$Name$Email",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.black54)
                 ),
