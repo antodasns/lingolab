@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lingolab/screens/dashboard.dart';
 import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/signup.dart';
 import 'package:lingolab/widgets/textfields.dart';
@@ -9,6 +12,8 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool _showPassword = false;
   void _togglevisibility() {
     setState(() {
@@ -106,11 +111,22 @@ class _LogInState extends State<LogIn> {
       ),
     );
   }
-
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
   Widget email(){
     return CustomTextField(
       hint:"Email ID",
       icon: Icons.email,
+      keyboardType: TextInputType.emailAddress,
+      textEditingController: emailController,
     );
   }
 
@@ -138,6 +154,7 @@ class _LogInState extends State<LogIn> {
       ),
       child: TextField(
         obscureText: !_showPassword,
+        controller: passwordController,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.lock,color: Colors.deepOrangeAccent,),
             border: InputBorder.none,
@@ -282,7 +299,18 @@ class _LogInState extends State<LogIn> {
 
   Widget submitButton(){
     return RaisedButton(
-      onPressed: (){},
+      onPressed: (){
+        FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
+        _firebaseAuth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text)
+      .then((user) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Dashboard()),
+            );
+          }).catchError((error) {
+          showToast("Username or Password mismatch", Colors.red);
+        });
+      },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
       padding: EdgeInsets.all(0.0),
       child: Ink(

@@ -330,12 +330,20 @@ class _SignUpState extends State<SignUp> {
             SizedBox(
               width: 10,
             ),
-            Text(
-              'Log In',
-              style: TextStyle(
-                  color: Color(0xff00a2e1),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
+            InkWell(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LogIn()),
+                );
+              },
+              child: Text(
+                'Log In',
+                style: TextStyle(
+                    color: Color(0xff00a2e1),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600),
+              ),
             ),
           ],
         ),
@@ -346,15 +354,20 @@ class _SignUpState extends State<SignUp> {
     return RaisedButton(
       onPressed: (){
         if (phoneController.text.length==10) {
-          var route = new MaterialPageRoute(
-            builder: (BuildContext context) =>
-            new Otp(name: fullnameController.text,
-                email: emailController.text,
-                phone:phoneController.text,
-                password: passwordController.text
-            ),
-          );
-          Navigator.of(context).push(route);
+          if (checkvalue==true) {
+            var route = new MaterialPageRoute(
+              builder: (BuildContext context) =>
+              new Otp(name: fullnameController.text,
+                  email: emailController.text,
+                  phone: phoneController.text,
+                  password: passwordController.text
+              ),
+            );
+            Navigator.of(context).push(route);
+          }
+          else{
+            showToast("Please accept the terms and conditions", Colors.red);
+          }
         } else {
           showToast("Please enter only 10 Digit mobile no without country code", Colors.red);
         }
