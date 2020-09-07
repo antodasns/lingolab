@@ -12,11 +12,17 @@ import 'package:lingolab/screens/payment.dart';
 import 'package:lingolab/screens/paymentsuccess.dart';
 import 'package:lingolab/screens/signup.dart';
 import 'package:lingolab/screens/otp.dart';
+import 'package:lingolab/state/lingonotifiers.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(LingoLab());
+  runApp(MultiProvider(
+      providers:[
+        ChangeNotifierProvider(create: (_) => LingoNotifier()),
+      ],
+      child: LingoLab()));
 }
 
 class LingoLab extends StatelessWidget {

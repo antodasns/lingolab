@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lingolab/screens/loginpage.dart';
 import 'package:lingolab/screens/otp.dart';
 import 'package:lingolab/widgets/textfields.dart';
@@ -19,19 +20,19 @@ class _SignUpState extends State<SignUp> {
   SigningUp signingUp =SigningUp();
   GlobalKey<FormState>_formKey = GlobalKey();
   FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
-  save()async{
-    await _firebaseAuth.createUserWithEmailAndPassword(email: signingUp.email, password: signingUp.password)
-    .then((user){
-      print('signed in as ${user.user.uid}');
-    });
-    _firebaseAuth.verifyPhoneNumber(
-        phoneNumber: null,
-        verificationCompleted: null,
-        verificationFailed: null,
-        codeSent: null,
-        codeAutoRetrievalTimeout: null
-    );
-  }
+//  save()async{
+//    await _firebaseAuth.createUserWithEmailAndPassword(email: signingUp.email, password: signingUp.password)
+//    .then((user){
+//      print('signed in as ${user.user.uid}');
+//    });
+//    _firebaseAuth.verifyPhoneNumber(
+//        phoneNumber: null,
+//        verificationCompleted: null,
+//        verificationFailed: null,
+//        codeSent: null,
+//        codeAutoRetrievalTimeout: null
+//    );
+//  }
 
   bool _showPassword = false;
   void _togglevisibility() {
@@ -48,7 +49,6 @@ class _SignUpState extends State<SignUp> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       body: Stack(
         children: <Widget>[
             Container(
@@ -133,6 +133,18 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
   Widget fullName(){
     return CustomTextField(
       hint:"Full Name",
@@ -182,7 +194,8 @@ class _SignUpState extends State<SignUp> {
           ),
         ],
       ),
-      child: TextField(
+      child: TextFormField(
+        controller: passwordController,
         onChanged: (value) {
           signingUp.password = value;
         },
@@ -332,18 +345,19 @@ class _SignUpState extends State<SignUp> {
   Widget submitButton(){
     return RaisedButton(
       onPressed: (){
-        save();
-        var route = new MaterialPageRoute(
-          builder: (BuildContext context) =>
-          new Otp(name: fullnameController.text,
-          email: emailController.text,
-            phone:phoneController.text,
-              password: passwordController.text
+        if (phoneController.text.length==10) {
+          var route = new MaterialPageRoute(
+            builder: (BuildContext context) =>
+            new Otp(name: fullnameController.text,
+                email: emailController.text,
+                phone:phoneController.text,
+                password: passwordController.text
             ),
-        );
-        Navigator.of(context).push(route);
-
-        Navigator.pushReplacementNamed(context, '/otp');
+          );
+          Navigator.of(context).push(route);
+        } else {
+          showToast("Please enter only 10 Digit mobile no without country code", Colors.red);
+        }
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
       padding: EdgeInsets.all(0.0),

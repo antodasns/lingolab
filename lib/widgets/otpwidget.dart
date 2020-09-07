@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'file:///C:/Users/ASUS/AndroidStudioProjects/lingolab/lib/widgets/timer.dart';
+import 'package:lingolab/screens/otp.dart';
 
 class OtpWidget extends StatefulWidget {
   final String phoneNumber;
@@ -48,11 +49,11 @@ class _OtpWidgetState extends State<OtpWidget> {
       key: formKey,
       child: Padding(
           padding: const EdgeInsets.symmetric(
-              vertical: 8.0, horizontal: 30),
+              vertical: 8.0),
           child: PinCodeTextField(
             textInputType: TextInputType.number,
             textStyle: TextStyle(color: Colors.white,fontWeight:FontWeight.w900,fontSize: 18),
-            length: 4,
+            length: 6,
             obsecureText: false,
             animationType: AnimationType.fade,
             validator: (v) {
@@ -81,6 +82,7 @@ class _OtpWidgetState extends State<OtpWidget> {
             errorAnimationController: errorController,
             controller: textEditingController,
             onCompleted: (v) {
+
               print("Completed");
             },
             onChanged: (value) {
