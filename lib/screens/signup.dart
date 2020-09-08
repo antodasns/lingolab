@@ -48,7 +48,7 @@ class _SignUpState extends State<SignUp> {
     double boxappheight=(appHeight<=700)?appHeight*.03:(appHeight<=775)?appHeight*.04: appHeight*.05;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+
       body: Stack(
         children: <Widget>[
             Container(
@@ -354,6 +354,7 @@ class _SignUpState extends State<SignUp> {
     return RaisedButton(
       onPressed: (){
         if (phoneController.text.length==10) {
+          if (passwordController.text.length>=6) {
           if (checkvalue==true) {
             var route = new MaterialPageRoute(
               builder: (BuildContext context) =>
@@ -367,6 +368,9 @@ class _SignUpState extends State<SignUp> {
           }
           else{
             showToast("Please accept the terms and conditions", Colors.red);
+          }
+          } else {
+            showToast("Password should be at least 6 characters", Colors.red);
           }
         } else {
           showToast("Please enter only 10 Digit mobile no without country code", Colors.red);

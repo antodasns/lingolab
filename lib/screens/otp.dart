@@ -63,7 +63,7 @@ class _OtpState extends State<Otp> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).popAndPushNamed("/signup"),
         ),
         backgroundColor: Colors.white10,
         bottomOpacity: 0.0,
@@ -84,7 +84,7 @@ class _OtpState extends State<Otp> {
                 ),
                 SizedBox(height: boxappheight),
                 Text(
-                    "We have sent you an SMS with a code to number +91 0001110001",
+                    "We have sent you an SMS with a code to number +91 ${widget.phone}",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.black54)
                 ),
@@ -177,23 +177,30 @@ class _OtpState extends State<Otp> {
     });
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential phoneAuthCredential) {
-      _firebaseAuth
-          .signInWithCredential(phoneAuthCredential)
-          .then((user) {
-        if (user.user != null) {
-          _firebaseAuth.createUserWithEmailAndPassword(email: widget.email, password: widget.password);
-          // Handle loogged in state
-          print(user.user.phoneNumber);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Dashboard()),
-          );
-        } else {
-          showToast("Error validating OTP, try again", Colors.red);
-        }
+
+        _firebaseAuth.createUserWithEmailAndPassword(email: widget.email, password: widget.password)
+            .then((user){
+          _firebaseAuth
+              .signInWithCredential(phoneAuthCredential)
+              .then((numberuser) {
+          if (numberuser.user != null) {
+            // Handle loogged in state
+            print(user.user.phoneNumber);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Dashboard()),
+            );
+          } else {
+            showToast("Error validating OTP, try again", Colors.red);
+            user.user.delete();
+          }
+        }).catchError((error) {
+            showToast("Error validating OTP, try again", Colors.red);
+            user.user.delete();
+          });
       }).catchError((error) {
-        showToast("Try again in sometime", Colors.red);
-      });
+          showToast(error.message, Colors.red);
+        });
     };
     final PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException authException) {
@@ -230,25 +237,32 @@ class _OtpState extends State<Otp> {
   }
 
   void _onFormSubmitted() async {
-    AuthCredential _authCredential = PhoneAuthProvider.getCredential(
-        verificationId: _verificationId, smsCode: _pinEditingController.text);
-    _firebaseAuth
-        .signInWithCredential(_authCredential)
-        .then((user) {
-      _firebaseAuth.createUserWithEmailAndPassword(email: widget.email, password: widget.password);
-      if (user.user != null) {
-        // Handle loogged in state
-        print(user.user.phoneNumber);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Dashboard()),
-        );
-      } else {
-        showToast("Error validating OTP, try again", Colors.red);
-      }
-    }).catchError((error) {
-      showToast("Something went wrong", Colors.red);
-    });
+      AuthCredential _authCredential = PhoneAuthProvider.getCredential(
+          verificationId: _verificationId, smsCode: _pinEditingController.text);
+      _firebaseAuth.createUserWithEmailAndPassword(
+          email: widget.email, password: widget.password)
+          .then((user) {
+        _firebaseAuth
+            .signInWithCredential(_authCredential)
+            .then((numberuser) {
+          if (numberuser.user != null) {
+            // Handle loogged in state
+            print(user.user.phoneNumber);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Dashboard()),
+            );
+          } else {
+            showToast("Error validating OTP, try again", Colors.red);
+            user.user.delete();
+          }
+        }).catchError((error) {
+          showToast("Error validating OTP, try again", Colors.red);
+          user.user.delete();
+        });
+      }).catchError((error) {
+        showToast(error.message, Colors.red);
+      });
   }
 }
 

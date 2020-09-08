@@ -30,7 +30,7 @@ class LingoLab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/signup",
+      initialRoute: "/login",
       routes: {
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),

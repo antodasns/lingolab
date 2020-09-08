@@ -303,10 +303,8 @@ class _LogInState extends State<LogIn> {
         FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
         _firebaseAuth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text)
       .then((user) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Dashboard()),
-            );
+            
+            Navigator.pushNamed(context, "/dashboard");
           }).catchError((error) {
           showToast("Username or Password mismatch", Colors.red);
         });
