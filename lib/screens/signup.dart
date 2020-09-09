@@ -3,16 +3,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lingolab/screens/loginpage.dart';
 import 'package:lingolab/screens/otp.dart';
+import 'package:lingolab/state/lingonotifiers.dart';
 import 'package:lingolab/widgets/textfields.dart';
+import 'package:provider/provider.dart';
 class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
-
   TextEditingController fullnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -41,6 +43,45 @@ class _SignUpState extends State<SignUp> {
     });
   }
   bool checkvalue=false;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+//  FirebaseUser depriciated so use User
+  User _user;
+
+  GoogleSignIn _googleSignIn = new GoogleSignIn();
+  bool isSignIn = false;
+
+  Future<void> handleSignIn() async {
+    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+    await googleSignInAccount.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+
+//    They have renamed the class 'AuthResult' to 'UserCredential'
+
+    UserCredential result = (await _auth.signInWithCredential(credential));
+
+    _user = result.user;
+
+    setState(() {
+      Provider.of<LingoNotifier>(context, listen: false).signIn=true;
+      isSignIn = true;
+      Navigator.pushNamed(context, "/dashboard");
+    });
+  }
+
+  Future<void> gooleSignout() async {
+    await _auth.signOut().then((onValue) {
+      _googleSignIn.signOut();
+      setState(() {
+        isSignIn = true;
+        Provider.of<LingoNotifier>(context, listen: false).signIn=false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double appWidth = MediaQuery.of(context).size.width;
@@ -286,9 +327,10 @@ class _SignUpState extends State<SignUp> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Text("SignIn with "),
           GestureDetector(
             onTap: () {
-
+              handleSignIn();
             },
             child: CircleAvatar(
               radius: 15,
@@ -296,13 +338,13 @@ class _SignUpState extends State<SignUp> {
               backgroundColor: Colors.white,
             ),
           ),
-          SizedBox(
-            width: 30,
-          ),
-          CircleAvatar(
-            radius: 15,
-            backgroundImage: AssetImage("assets/logo/facebook.jpg"),
-          ),
+//          SizedBox(
+//            width: 30,
+//          ),
+//          CircleAvatar(
+//            radius: 15,
+//            backgroundImage: AssetImage("assets/logo/facebook.jpg"),
+//          ),
         ],
       ),
     );

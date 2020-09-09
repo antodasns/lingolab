@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
 class LingoNotifier with ChangeNotifier{
-String _verifyid;
+  bool _isSignIn = false;
 
-set verif(String detail){
-  _verifyid = detail;
+set signIn(bool signin){
+  _isSignIn = signin;
   notifyListeners();
 }
 
-String get verifyid => _verifyid;
+  bool get isSignIn => _isSignIn;
 }

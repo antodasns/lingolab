@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lingolab/screens/dashboard.dart';
 import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/signup.dart';
@@ -20,6 +21,45 @@ class _LogInState extends State<LogIn> {
       _showPassword = !_showPassword;
     });
   }
+  FirebaseAuth _auth = FirebaseAuth.instance;
+//  FirebaseUser depriciated so use User
+  User _user;
+
+  GoogleSignIn _googleSignIn = new GoogleSignIn();
+  bool isSignIn = false;
+
+  Future<void> handleSignIn() async {
+    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+    await googleSignInAccount.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+
+//    They have renamed the class 'AuthResult' to 'UserCredential'
+
+    UserCredential result = (await _auth.signInWithCredential(credential));
+
+    _user = result.user;
+
+    setState(() {
+      isSignIn = true;
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
+    });
+  }
+
+  Future<void> gooleSignout() async {
+    await _auth.signOut().then((onValue) {
+      _googleSignIn.signOut();
+      setState(() {
+        isSignIn = false;
+      });
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     double appWidth = MediaQuery.of(context).size.width;
@@ -211,8 +251,10 @@ class _LogInState extends State<LogIn> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Text("SignIn with "),
           GestureDetector(
             onTap: () {
+              handleSignIn();
 
             },
             child: CircleAvatar(
@@ -221,13 +263,13 @@ class _LogInState extends State<LogIn> {
               backgroundColor: Colors.white,
             ),
           ),
-          SizedBox(
-            width: 30,
-          ),
-          CircleAvatar(
-            radius: 15,
-            backgroundImage: AssetImage("assets/logo/facebook.jpg"),
-          ),
+//          SizedBox(
+//            width: 30,
+//          ),
+//          CircleAvatar(
+//            radius: 15,
+//            backgroundImage: AssetImage("assets/logo/facebook.jpg"),
+//          ),
         ],
       ),
     );
@@ -303,7 +345,7 @@ class _LogInState extends State<LogIn> {
         FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
         _firebaseAuth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text)
       .then((user) {
-            
+
             Navigator.pushNamed(context, "/dashboard");
           }).catchError((error) {
           showToast("Username or Password mismatch", Colors.red);

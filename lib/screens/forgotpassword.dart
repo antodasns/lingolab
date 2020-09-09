@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lingolab/screens/loginpage.dart';
 import 'package:lingolab/widgets/textfields.dart';
 
@@ -8,7 +10,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-
+  TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double appWidth = MediaQuery
@@ -60,17 +62,32 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       ),
     );
   }
-
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
   Widget email() {
     return CustomTextField(
-      hint: "Your email address",
-      icon: Icons.mail,
+      hint:"Your email address",
+      icon: Icons.account_circle,
+      keyboardType: TextInputType.text,
+      textEditingController: emailController,
+      onPressed: (value) {
+
+      },
     );
   }
   Widget submitButton() {
     return RaisedButton(
-      onPressed: () {
+      onPressed: () async {
         showAlert(context);
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
       padding: EdgeInsets.all(0.0),
@@ -122,10 +139,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 SizedBox(height: 15,),
                 RaisedButton(
                   onPressed: () {
-                    Navigator.pop(
-                      context,
-                      MaterialPageRoute(builder: (context) => LogIn()),
-                    );
+                    Navigator.pushNamed(context, "/login");
                   },
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
                   padding: const EdgeInsets.all(0.0),

@@ -1,8 +1,10 @@
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lingolab/widgets/subjectlist.dart';
 
 class Dashboard extends StatefulWidget {
@@ -10,8 +12,9 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 class _DashboardState extends State<Dashboard> {
-  Widget appBarTitle = new Image.asset('assets/logo/lingolab.png', fit: BoxFit.contain,
-      height: 160,width: 160);
+  @override
+
+  Widget appBarTitle = new Image.asset('assets/logo/lingolab.png', height: 160,width: 160);
   Icon actionIcon = new Icon(Icons.search,color: Colors.black54);
   int selectedIndex = 2;
   Future<bool> _onBackPressed() {
@@ -46,6 +49,14 @@ class _DashboardState extends State<Dashboard> {
     ) ??
         false;
   }
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  GoogleSignIn _googleSignIn = new GoogleSignIn();
+  Future<void> gooleSignout() async {
+    await _auth.signOut().then((onValue) {
+      _googleSignIn.signOut();
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     double appWidth = MediaQuery.of(context).size.width;
@@ -58,11 +69,10 @@ class _DashboardState extends State<Dashboard> {
         resizeToAvoidBottomPadding: false,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 0.0,
-          title: Align(
-              widthFactor:.3,
-              child: appBarTitle),
+          title: appBarTitle,
             actions: <Widget>[
               searchIcon(),
             ]
@@ -256,6 +266,13 @@ class _DashboardState extends State<Dashboard> {
           onSelectTab: (index) {
             setState(() {
               selectedIndex = index;
+              if(index==4){
+                gooleSignout();
+                Navigator.pushReplacementNamed(context, '/login');
+              }
+              else{
+                print("error");
+              }
             });
           },
           items: [

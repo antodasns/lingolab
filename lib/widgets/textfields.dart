@@ -34,7 +34,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ],
       ),
       child: TextFormField(
-        autofocus: true,
         onChanged: widget.onPressed,
         controller: widget.textEditingController,
         keyboardType: widget.keyboardType,

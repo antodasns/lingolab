@@ -97,10 +97,16 @@ class _OtpState extends State<Otp> {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.black54)
                 ),
-                Text(
-                    "Resend a new code",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.deepOrangeAccent)
+                InkWell(
+                  onTap:() {
+                _onVerifyCode();
+                showToast("OTP resend successfully", Colors.red);
+                  },
+                  child: Text(
+                      "Resend a new code",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.deepOrangeAccent)
+                  ),
                 ),
               ],
             ),
