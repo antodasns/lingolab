@@ -100,7 +100,7 @@ class _OtpState extends State<Otp> {
                 InkWell(
                   onTap:() {
                 _onVerifyCode();
-                showToast("OTP resend successfully.", Colors.red);
+                showToast("OTP resend successfully", Colors.red);
                   },
                   child: Text(
                       "Resend a new code",
