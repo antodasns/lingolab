@@ -13,14 +13,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    double appWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double appHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double appWidth = MediaQuery.of(context).size.width;
+    double appHeight = MediaQuery.of(context).size.height;
     double boxappheight = appHeight * .05;
     return Scaffold(
       appBar: AppBar(
@@ -158,8 +152,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ],
                       ),
                     ),
-                    child: const Text(
-                        'Done',
+                    child: const Text('Done',
                         style: TextStyle(fontSize: 20)
                     ),
                   ),
