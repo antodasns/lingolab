@@ -31,7 +31,7 @@ class LingoLab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: (FirebaseAuth.instance.currentUser!=null)?"/dashboard":"/login",
+      initialRoute: (FirebaseAuth.instance.currentUser!=null)?"/dashboard":"/dashboard",
       routes: {
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),
