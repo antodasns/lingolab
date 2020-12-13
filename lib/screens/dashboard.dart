@@ -5,19 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lingolab/state/course.dart';
+import 'package:lingolab/state/lingonotifiers.dart';
+
 import 'package:lingolab/widgets/subjectlist.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
 }
 class _DashboardState extends State<Dashboard> {
+
   @override
 
   Widget appBarTitle = new Image.asset('assets/logo/lingolab.png', height: 160,width: 160);
   Icon actionIcon = new Icon(Icons.search,color: Colors.black54);
   int selectedIndex = 2;
+
   Future<bool> _onBackPressed() {
+
     return showDialog(
       context: context,
       builder: (context) => new AlertDialog(
@@ -59,6 +66,7 @@ class _DashboardState extends State<Dashboard> {
   }
   @override
   Widget build(BuildContext context) {
+
     double appWidth = MediaQuery.of(context).size.width;
     double appHeight = MediaQuery.of(context).size.height;
     double boxappheight=(appHeight<=700)?appHeight*.12:(appHeight<=775)?appHeight*.11: appHeight*.10;
@@ -104,8 +112,8 @@ class _DashboardState extends State<Dashboard> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                SubjectList(imglocation:"assets/logo/english.png",subjectname:"English"),
-                                SubjectList(imglocation:"assets/logo/german.png",subjectname:"German"),
+                                SubjectList(imglocation:"assets/logo/english.png",subjectname:"English"+Provider.of<CourseNotifier>(context,listen:false).courseList.toString()),
+                                SubjectList(imglocation:"assets/logo/german.png",subjectname:"German"+Provider.of<LingoNotifier>(context, listen: false).isSignIn.toString()),
                               ],
                             ),
                           ),

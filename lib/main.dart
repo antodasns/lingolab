@@ -13,6 +13,7 @@ import 'package:lingolab/screens/payment.dart';
 import 'package:lingolab/screens/paymentsuccess.dart';
 import 'package:lingolab/screens/signup.dart';
 import 'package:lingolab/screens/otp.dart';
+import 'package:lingolab/state/course.dart';
 import 'package:lingolab/state/lingonotifiers.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ void main() async {
   runApp(MultiProvider(
       providers:[
         ChangeNotifierProvider(create: (_) => LingoNotifier()),
+        ChangeNotifierProvider(create: (_) => CourseNotifier()),
       ],
       child: LingoLab()));
 }
@@ -30,8 +32,10 @@ class LingoLab extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Provider.of<CourseNotifier>(context, listen: false).loadCourseList(context);
+    Provider.of<LingoNotifier>(context, listen: false).signIn;
     return MaterialApp(
-      initialRoute: (FirebaseAuth.instance.currentUser!=null)?"/dashboard":"/dashboard",
+      initialRoute: (FirebaseAuth.instance.currentUser!=null)?"/dashboard":"/login",
       routes: {
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),

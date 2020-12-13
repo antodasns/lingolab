@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class LingoNotifier with ChangeNotifier{
-  bool _isSignIn = false;
+  bool _isSignIn;
 
-set signIn(bool signin){
+void signIn(bool signin){
   _isSignIn = signin;
   notifyListeners();
 }
