@@ -66,8 +66,7 @@ class _SignUpState extends State<SignUp> {
     _user = result.user;
 
     setState(() {
-      Provider.of<LingoNotifier>(context, listen: false).signIn(true);
-      isSignIn = true;
+      Provider.of<LingoNotifier>(context, listen: false).signIn=true;
       Navigator.pushNamed(context, "/dashboard");
     });
   }
@@ -76,8 +75,7 @@ class _SignUpState extends State<SignUp> {
     await _auth.signOut().then((onValue) {
       _googleSignIn.signOut();
       setState(() {
-        isSignIn = true;
-        Provider.of<LingoNotifier>(context, listen: false).signIn(false);
+        Provider.of<LingoNotifier>(context, listen: false).signIn=false;
       });
     });
   }

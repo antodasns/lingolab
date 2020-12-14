@@ -5,7 +5,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lingolab/screens/dashboard.dart';
 import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/signup.dart';
+import 'package:lingolab/state/lingonotifiers.dart';
 import 'package:lingolab/widgets/textfields.dart';
+import 'package:provider/provider.dart';
 
 class LogIn extends StatefulWidget {
   @override
@@ -44,7 +46,7 @@ class _LogInState extends State<LogIn> {
     _user = result.user;
 
     setState(() {
-      isSignIn = true;
+      Provider.of<LingoNotifier>(context, listen: false).signIn=true;
       Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
     });
   }
@@ -53,7 +55,7 @@ class _LogInState extends State<LogIn> {
     await _auth.signOut().then((onValue) {
       _googleSignIn.signOut();
       setState(() {
-        isSignIn = false;
+        Provider.of<LingoNotifier>(context, listen: false).signIn=false;
       });
     });
   }

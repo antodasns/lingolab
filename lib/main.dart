@@ -33,7 +33,7 @@ class LingoLab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<CourseNotifier>(context, listen: false).loadCourseList(context);
-    Provider.of<LingoNotifier>(context, listen: false).signIn;
+
     return MaterialApp(
       initialRoute: (FirebaseAuth.instance.currentUser!=null)?"/dashboard":"/login",
       routes: {
