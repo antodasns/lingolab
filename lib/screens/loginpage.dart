@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lingolab/screens/dashboard.dart';
 import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/signup.dart';
+import 'package:lingolab/state/course.dart';
 import 'package:lingolab/state/lingonotifiers.dart';
 import 'package:lingolab/widgets/textfields.dart';
 import 'package:provider/provider.dart';

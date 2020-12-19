@@ -7,11 +7,11 @@ import "package:provider/provider.dart";
 
 void getCourseListFromFirestore(BuildContext context) async {
 
-  FirebaseFirestore.instance.collection('courses').get().then((querySnapshot) {
+  await FirebaseFirestore.instance.collection('courses').get().then((querySnapshot) {
+
     List<Course> courseList = List<Course>();
     querySnapshot.docs.forEach((document) {
       courseList.add(mapFirestoreDocToCourse(document));
-    print("hhh");
     });
 
     Provider.of<CourseNotifier>(context, listen: false).courseList = courseList;
@@ -24,8 +24,12 @@ Course mapFirestoreDocToCourse(document) {
 
     if (key == 'course_id') {
       course.courseId = value;
-    } else {
-      course.courseName=value;
+    }
+    if (key == 'course_name') {
+      course.courseName = value;
+    }
+    else {
+      course.icon=value;
     }
   });
 

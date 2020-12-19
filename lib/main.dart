@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lingolab/screens/aa.dart';
 import 'package:lingolab/screens/chaptersandtests.dart';
 import 'package:lingolab/screens/videoplayback.dart';
 import 'package:lingolab/screens/videosandebooks.dart';
@@ -15,6 +16,7 @@ import 'package:lingolab/screens/signup.dart';
 import 'package:lingolab/screens/otp.dart';
 import 'package:lingolab/state/course.dart';
 import 'package:lingolab/state/lingonotifiers.dart';
+import 'package:lingolab/state/selection.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -23,7 +25,11 @@ void main() async {
   runApp(MultiProvider(
       providers:[
         ChangeNotifierProvider(create: (_) => LingoNotifier()),
-        ChangeNotifierProvider(create: (_) => CourseNotifier()),
+//        ChangeNotifierProvider(create: (_) => CourseNotifier()),
+        ChangeNotifierProvider(create: (_) => SelectionNotifier()),
+        ChangeNotifierProvider<CourseNotifier>(
+          create: (context) => CourseNotifier(),
+        ),
       ],
       child: LingoLab()));
 }
@@ -32,11 +38,12 @@ class LingoLab extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Provider.of<CourseNotifier>(context, listen: false).loadCourseList(context);
+
 
     return MaterialApp(
       initialRoute: (FirebaseAuth.instance.currentUser!=null)?"/dashboard":"/login",
       routes: {
+        "/pull":(context) => PullToRefresh(),
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),
         "/forgotpassword":(context) => ForgotPassword(),

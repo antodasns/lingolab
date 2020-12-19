@@ -1,10 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:lingolab/state/selection.dart';
 import 'package:lingolab/widgets/levellists.dart';
+import 'package:provider/provider.dart';
 class Courselevels extends StatefulWidget {
   final String imglocation;
-  final String subjectname;
-  const Courselevels ({Key key,this.imglocation,this.subjectname}):super(key:key);
+  const Courselevels ({Key key,this.imglocation}):super(key:key);
   @override
   _CourselevelsState createState() => _CourselevelsState();
 }
@@ -68,15 +69,15 @@ class _CourselevelsState extends State<Courselevels> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                          children: <Widget>[
-                           Text(widget.subjectname,
-                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800,color: Colors.white),),
+                           Text(Provider.of<SelectionNotifier>(context,listen:false).courseName,
+                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800,color: Colors.white)),
                            SizedBox(height: 10),
                            Row(
                             children: <Widget>[
                               Text("60 Chapters | ",
-                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
+                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white)),
                               Text("35 Tests",
-                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
+                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white)),
                             ],
                            )
                          ],

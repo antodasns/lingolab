@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lingolab/screens/courselevels.dart';
+import 'package:lingolab/state/selection.dart';
+import 'package:provider/provider.dart';
 
 class SubjectList extends StatefulWidget {
   final String imglocation;
   final String subjectname;
-  const SubjectList ({Key key,this.imglocation,this.subjectname}):super(key:key);
+  final String courseid;
+  const SubjectList ({Key key,this.imglocation,this.subjectname,this.courseid}):super(key:key);
   @override
   _SubjectListState createState() => _SubjectListState();
 }
@@ -17,10 +20,13 @@ class _SubjectListState extends State<SubjectList> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
+        Provider.of<SelectionNotifier>(context,listen:false).courseSelected=widget.courseid;
+        Provider.of<SelectionNotifier>(context,listen:false).courseName=widget.subjectname;
         Navigator.push(
             context, MaterialPageRoute(builder: (context) =>
-            Courselevels(subjectname: widget.subjectname,imglocation: widget.imglocation,)
-        ));
+            Courselevels(imglocation: widget.imglocation)
+        ),
+        );
     },
       child: Container(
           height: 150,
@@ -42,7 +48,7 @@ class _SubjectListState extends State<SubjectList> {
             children: <Widget>[
               CircleAvatar(
                 radius: 40,
-                backgroundImage: AssetImage(widget.imglocation),
+                backgroundImage:NetworkImage(widget.imglocation),
               ),
               Text(widget.subjectname,
                 style: GoogleFonts.crimsonText(

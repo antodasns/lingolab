@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lingolab/model/chapter.dart';
 import 'package:lingolab/screens/coursedetailtheme.dart';
 import 'package:lingolab/screens/payment.dart';
+import 'package:lingolab/state/selection.dart';
+import 'package:lingolab/state/course.dart';
 import 'package:lingolab/widgets/coursecurriculum.dart';
+import 'package:provider/provider.dart';
 
 class CourseDetail extends StatefulWidget {
   final String level;
@@ -49,6 +53,8 @@ class _CourseDetailState extends State<CourseDetail>
 
   @override
   Widget build(BuildContext context) {
+    CourseNotifier chapter = Provider.of<CourseNotifier>(context);
+    Provider.of<CourseNotifier>(context, listen: false).loadChapterList(context,Provider.of<SelectionNotifier>(context,listen:false).courseSelected,widget.level);
     final double tempHeight = MediaQuery.of(context).size.height -
         (MediaQuery.of(context).size.width / 1.2) +
         24.0;
@@ -76,7 +82,7 @@ class _CourseDetailState extends State<CourseDetail>
                           padding: const EdgeInsets.only(
                               top: 32.0, left: 18, right: 16),
                           child: Text(
-                            'English ('+widget.level+')',
+                            Provider.of<SelectionNotifier>(context,listen:false).courseName+"("+widget.level+')',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -94,7 +100,7 @@ class _CourseDetailState extends State<CourseDetail>
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                '1999 ₹',
+                                '1999 ₹'+Provider.of<SelectionNotifier>(context,listen:false).courseSelected,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
@@ -190,7 +196,8 @@ class _CourseDetailState extends State<CourseDetail>
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: <Widget>[
-                                  CourseCurriculum(slno:'01',content:"Introduction + Confidence building"),
+                                  for(Chapter x in chapter.chapterList)
+                                  CourseCurriculum(slno:'01',content:x.chapterName),
                                   CourseCurriculum(slno:'02',content:"Easy way to talk is to listen carefully"),
                                   CourseCurriculum(slno:'03',content:"Tips & Tricks to listen & understand"),
                                   CourseCurriculum(slno:'04',content:"Build your sentence through Reading"),

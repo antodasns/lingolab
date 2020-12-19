@@ -18,11 +18,12 @@ class _LevelListState extends State<LevelList> {
     double appHeight = MediaQuery.of(context).size.height;
     double boxappheight=(appHeight<=700)?appHeight*.12:(appHeight<=775)?appHeight*.11: appHeight*.10;
     double boxappheight2=(appHeight<=700)?appHeight*.1:(appHeight<=775)?appHeight*.09: appHeight*.09;
+    String courselevel=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
     return GestureDetector(
       onTap: (){
         Navigator.push(
             context, MaterialPageRoute(builder: (context) =>
-            CourseDetail(level: widget.level,imgloc: widget.imgloc,)
+            CourseDetail(level: widget.level,imgloc: widget.imgloc)
         ));
       },
       child: Container(
