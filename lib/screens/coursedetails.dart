@@ -68,7 +68,7 @@ class _CourseDetailState extends State<CourseDetail>
               child: Stack(
                 children: <Widget>[
                   Container(
-                    height: 1580,
+
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,22 +157,20 @@ class _CourseDetailState extends State<CourseDetail>
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity2,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 16, right: 16, top: 8, bottom: 8),
-                              child: Text(
-                                'Do you want to learn English ? Do you want to learn minimum conversation techniques? Then this is the first step for you to learn this language.',
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 17,
-                                  letterSpacing: 0.27,
-                                  color: DesignCourseAppTheme.grey,
-                                ),
+                        AnimatedOpacity(
+                          duration: const Duration(milliseconds: 500),
+                          opacity: opacity2,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, top: 8, bottom: 8),
+                            child: Text(
+                              'Do you want to learn English ? Do you want to learn minimum conversation techniques? Then this is the first step for you to learn this language.',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 17,
+                                letterSpacing: 0.27,
+                                color: DesignCourseAppTheme.grey,
                               ),
                             ),
                           ),
@@ -198,6 +196,16 @@ class _CourseDetailState extends State<CourseDetail>
                                 children: <Widget>[
                                   for(Chapter x in chapter.chapterList)
                                   CourseCurriculum(slno:'01',content:x.chapterName),
+                                  CourseCurriculum(slno:'02',content:"Easy way to talk is to listen carefully"),
+                                  CourseCurriculum(slno:'03',content:"Tips & Tricks to listen & understand"),
+                                  CourseCurriculum(slno:'04',content:"Build your sentence through Reading"),
+                                  CourseCurriculum(slno:'05',content:"Write,Memories,Train your brain"),
+                                  CourseCurriculum(slno:'06',content:"Minimal conversations"),
+                                  CourseCurriculum(slno:'07',content:"How to speak Tips & Tricks"),
+                                  CourseCurriculum(slno:'08',content:"How English is going to help you"),
+                                  CourseCurriculum(slno:'09',content:"4 Live Sessions"),
+                                  CourseCurriculum(slno:'10',content:"Exercises and Practices"),
+                                  CourseCurriculum(slno:'10',content:"Weekly Exams and Personal guidance"),
                                   CourseCurriculum(slno:'02',content:"Easy way to talk is to listen carefully"),
                                   CourseCurriculum(slno:'03',content:"Tips & Tricks to listen & understand"),
                                   CourseCurriculum(slno:'04',content:"Build your sentence through Reading"),

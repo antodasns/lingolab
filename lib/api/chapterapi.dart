@@ -22,7 +22,7 @@ void getChapterListFromFirestore(BuildContext context,courseid,level) async {
 Chapter mapFirestoreDocToChapter(document,courseid,level) {
   Chapter chapter = Chapter();
 
-  print(document.data().runtimeType);
+//  print(document.data().runtimeType);
   document.data().forEach((key, value) {
     if (key == 'chapter_id') {
       chapter.chapterId = value;
@@ -39,6 +39,6 @@ Chapter mapFirestoreDocToChapter(document,courseid,level) {
   }
   );
 
-  print(chapter.runtimeType);
+//  print(chapter.runtimeType);
   return chapter;
 }

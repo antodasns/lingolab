@@ -90,7 +90,7 @@ class _CourselevelsState extends State<Courselevels> {
                           padding: EdgeInsets.fromLTRB(0,0,10,10),
                           child: CircleAvatar(
                             radius: 40,
-                            backgroundImage: AssetImage(widget.imglocation),
+                            backgroundImage: NetworkImage(widget.imglocation),
                             backgroundColor: Colors.transparent,
                           ),
                       ),
