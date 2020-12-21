@@ -23,7 +23,7 @@ class _DashboardState extends State<Dashboard> {
     refreshList();
   }
 
-  Future<String> callAsyncFetch() => Future.delayed(Duration(milliseconds: 1), () => Provider.of<CourseNotifier>(context, listen: false).courseList[0].courseId);
+  Future<String> callAsyncFetch() => Future.delayed(Duration(milliseconds: 2), () => Provider.of<CourseNotifier>(context, listen: false).courseList[0].courseId);
 
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   Future<Null> refreshList() async {

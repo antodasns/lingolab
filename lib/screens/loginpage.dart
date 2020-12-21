@@ -45,7 +45,8 @@ class _LogInState extends State<LogIn> {
     UserCredential result = (await _auth.signInWithCredential(credential));
 
     _user = result.user;
-
+    print("haiiii");
+    print(_user);
     setState(() {
       Provider.of<LingoNotifier>(context, listen: false).signIn=true;
       Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
@@ -348,7 +349,7 @@ class _LogInState extends State<LogIn> {
         FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
         _firebaseAuth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text)
       .then((user) {
-
+          Provider.of<LingoNotifier>(context, listen: false).signIn=true;
             Navigator.pushNamed(context, "/dashboard");
           }).catchError((error) {
           showToast("Username or Password mismatch", Colors.red);

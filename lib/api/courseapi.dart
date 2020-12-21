@@ -28,9 +28,22 @@ Course mapFirestoreDocToCourse(document) {
     if (key == 'course_name') {
       course.courseName = value;
     }
-    else {
-      course.icon=value;
+    if (key == 'icon') {
+      course.icon = value;
     }
+    if (key == 'description') {
+      course.description = value;
+    }
+    if (key == 'aprice') {
+      course.aprice = value;
+    }
+    if (key == 'bprice') {
+      course.bprice = value;
+    }
+    if (key == 'cprice') {
+      course.cprice = value;
+    }
+
   });
 
   return course;

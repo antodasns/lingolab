@@ -33,5 +33,36 @@ class CourseNotifier with ChangeNotifier{
     notifyListeners();
   }
 
+  //course Description &&&& Price  --------------------
+
+  String _courseDesc;
+  String _coursePrice;
+  String _courseLevel;
+
+  void loadDescription(BuildContext context,courseid,level){
+    List<Course> courseLists = List<Course>();
+    courseLists=courseList.where((Course crse) => crse.courseId ==courseid).toList();
+    _courseLevel=level;
+    _courseDesc=courseLists[0].description;
+    _coursePrice=(level=="a")?courseLists[0].aprice:(level=="b")?courseLists[0].bprice:courseLists[0].cprice;
+  }
+
+  String get courseDesc => _courseDesc;
+  set courseDesc(String selection){
+    _courseDesc = selection;
+    notifyListeners();
+  }
+
+  String get coursePrice => _coursePrice;
+  set coursePrice(String selection){
+    _coursePrice = selection;
+    notifyListeners();
+  }
+
+  String get courseLevel => _courseLevel;
+  set courseLevel(String selection){
+    _courseLevel = selection;
+    notifyListeners();
+  }
 
 }

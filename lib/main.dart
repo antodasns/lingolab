@@ -52,7 +52,7 @@ class LingoLab extends StatelessWidget {
         "/courselevels":(context) => Courselevels(),
         "/coursedetail":(context) => CourseDetail(),
         "/payment":(context) => Payment(),
-        "/detail":(context) => DetailScreen(),
+        "/paymentSuccess":(context) => PaymentSuccess(),
         "/activecourse":(context) => ActiveCourse(),
         "/chpterdetails":(context) => ChapterDetails(),
         "/videoplayback":(context) => VideoPlayback(),

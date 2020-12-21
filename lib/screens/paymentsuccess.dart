@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lingolab/screens/dashboard.dart';
+import 'package:lingolab/state/course.dart';
+import 'package:lingolab/state/selection.dart';
+import 'package:provider/provider.dart';
 
-class DetailScreen extends StatelessWidget {
+class PaymentSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +96,7 @@ class DetailScreen extends StatelessWidget {
                                     size: 35.0,
                                   ),
                                   title: Text(
-                                    'English',
+                                    Provider.of<SelectionNotifier>(context,listen:false).courseName,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -108,7 +112,7 @@ class DetailScreen extends StatelessWidget {
                                   trailing: Padding(
                                     padding: const EdgeInsets.only(top: 20.0),
                                     child: Text(
-                                      '\₹1240.00',
+                                      '\₹'+Provider.of<CourseNotifier>(context,listen:false).coursePrice,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -135,7 +139,7 @@ class DetailScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            '\₹2730.00',
+                            '\₹'+Provider.of<CourseNotifier>(context,listen:false).coursePrice,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -205,7 +209,12 @@ class DetailScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 30.0),
                 child: InkWell(
                   splashColor: Colors.red,
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) =>
+                        Dashboard()
+                    ));
+                  },
                   child: Container(
                     width: 300.0,
                     height: 50.0,

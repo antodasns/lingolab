@@ -22,6 +22,7 @@ class _SubjectListState extends State<SubjectList> {
       onTap: (){
         Provider.of<SelectionNotifier>(context,listen:false).courseSelected=widget.courseid;
         Provider.of<SelectionNotifier>(context,listen:false).courseName=widget.subjectname;
+        Provider.of<SelectionNotifier>(context,listen:false).courseImg=widget.imglocation;
         Navigator.push(
             context, MaterialPageRoute(builder: (context) =>
             Courselevels(imglocation: widget.imglocation)

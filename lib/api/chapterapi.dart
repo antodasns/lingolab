@@ -11,18 +11,17 @@ void getChapterListFromFirestore(BuildContext context,courseid,level) async {
 
   await FirebaseFirestore.instance.collection('chapters').get().then((querySnapshot) {
     List<Chapter> chapterList = List<Chapter>();
+    List<Chapter> chapterLists = List<Chapter>();
     querySnapshot.docs.forEach((document) {
       chapterList.add(mapFirestoreDocToChapter(document,courseid,level));
+      chapterLists=chapterList.where((Chapter chapter) => chapter.courseId ==courseid && chapter.courseLevel ==level).toList();
     });
-
-    Provider.of<CourseNotifier>(context, listen: false).chapterList = chapterList;
+    Provider.of<CourseNotifier>(context, listen: false).chapterList = chapterLists;
   });
 
 }
 Chapter mapFirestoreDocToChapter(document,courseid,level) {
   Chapter chapter = Chapter();
-
-//  print(document.data().runtimeType);
   document.data().forEach((key, value) {
     if (key == 'chapter_id') {
       chapter.chapterId = value;
@@ -33,12 +32,10 @@ Chapter mapFirestoreDocToChapter(document,courseid,level) {
     if (key == 'chapter_name') {
       chapter.chapterName = value;
     }
-    else {
-      chapter.courseLevel=value;
+    if (key == 'course_level') {
+      chapter.courseLevel = value;
     }
   }
   );
-
-//  print(chapter.runtimeType);
   return chapter;
 }

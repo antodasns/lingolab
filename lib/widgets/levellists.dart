@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lingolab/screens/coursedetails.dart';
+import 'package:lingolab/state/course.dart';
+import 'package:lingolab/state/selection.dart';
+import 'package:provider/provider.dart';
 
 class LevelList extends StatefulWidget {
   final String level;
@@ -21,6 +24,12 @@ class _LevelListState extends State<LevelList> {
     String courselevel=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
     return GestureDetector(
       onTap: (){
+
+        String Levels=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
+        String crseslcted=Provider.of<SelectionNotifier>(context,listen:false).courseSelected;
+        Provider.of<CourseNotifier>(context, listen: false).loadDescription(context,crseslcted,Levels);
+        Provider.of<CourseNotifier>(context, listen: false).loadChapterList(context,crseslcted,Levels);
+
         Navigator.push(
             context, MaterialPageRoute(builder: (context) =>
             CourseDetail(level: widget.level,imgloc: widget.imgloc)

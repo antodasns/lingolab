@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:lingolab/screens/paymentsuccess.dart';
+import 'package:lingolab/state/course.dart';
+import 'package:lingolab/state/selection.dart';
+import 'package:provider/provider.dart';
 
 class Payment extends StatefulWidget {
   @override
@@ -14,6 +18,8 @@ class _PaymentState extends State<Payment> {
     double appHeight = MediaQuery.of(context).size.height;
     double boxappheight=(appHeight<=700)?appHeight*.12:(appHeight<=775)?appHeight*.11: appHeight*.10;
     double boxappheight2=(appHeight<=700)?appHeight*.1:(appHeight<=775)?appHeight*.09: appHeight*.09;
+    String crselvl=Provider.of<CourseNotifier>(context,listen:false).courseLevel;
+    String courseLevel=(crselvl=="a")?"Beginer":(crselvl=="b")?"Intermediate":"Advance";
     return Scaffold(
       appBar: GradientAppBar(
         leading: IconButton(
@@ -40,13 +46,13 @@ class _PaymentState extends State<Payment> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        Image.asset('assets/logo/english.png',height: 80,),
+                        Image.network(Provider.of<SelectionNotifier>(context,listen:false).courseImg,height: 80,),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: <Widget>[
                               Text("Total: "),
-                              Text("₹1999",style: TextStyle(fontSize:15.0 ,
+                              Text(Provider.of<CourseNotifier>(context,listen:false).coursePrice,style: TextStyle(fontSize:15.0 ,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.deepOrangeAccent,
                               ),),
@@ -59,10 +65,10 @@ class _PaymentState extends State<Payment> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0,0,120,10),
-                          child: Text("Mathematics",
+                          padding: const EdgeInsets.fromLTRB(0,0,50,10),
+                          child: Text(Provider.of<SelectionNotifier>(context,listen:false).courseName+"("+courseLevel+")",
                             style: TextStyle(fontSize:20.0 ,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w800,
                               color: Colors.black,
                             ),),
                         ),
@@ -249,7 +255,12 @@ class _PaymentState extends State<Payment> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: RaisedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) =>
+                        PaymentSuccess()
+                    ));
+                  },
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
