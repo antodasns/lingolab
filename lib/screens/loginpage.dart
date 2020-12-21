@@ -5,8 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lingolab/screens/dashboard.dart';
 import 'package:lingolab/screens/forgotpassword.dart';
 import 'package:lingolab/screens/signup.dart';
-import 'package:lingolab/state/course.dart';
-import 'package:lingolab/state/lingonotifiers.dart';
+import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/state/loginstate.dart';
 import 'package:lingolab/widgets/textfields.dart';
 import 'package:provider/provider.dart';
 
@@ -45,10 +45,10 @@ class _LogInState extends State<LogIn> {
     UserCredential result = (await _auth.signInWithCredential(credential));
 
     _user = result.user;
-    print("haiiii");
-    print(_user);
+
     setState(() {
-      Provider.of<LingoNotifier>(context, listen: false).signIn=true;
+      Provider.of<LoginNotifier>(context, listen: false).signIn=true;
+      Provider.of<LoginNotifier>(context, listen: false).userId=_user.uid;
       Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
     });
   }
@@ -57,7 +57,7 @@ class _LogInState extends State<LogIn> {
     await _auth.signOut().then((onValue) {
       _googleSignIn.signOut();
       setState(() {
-        Provider.of<LingoNotifier>(context, listen: false).signIn=false;
+        Provider.of<LoginNotifier>(context, listen: false).signIn=false;
       });
     });
   }
@@ -349,7 +349,8 @@ class _LogInState extends State<LogIn> {
         FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
         _firebaseAuth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text)
       .then((user) {
-          Provider.of<LingoNotifier>(context, listen: false).signIn=true;
+          Provider.of<LoginNotifier>(context, listen: false).signIn=true;
+          Provider.of<LoginNotifier>(context, listen: false).userId=user.user.uid;
             Navigator.pushNamed(context, "/dashboard");
           }).catchError((error) {
           showToast("Username or Password mismatch", Colors.red);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lingolab/screens/courselevels.dart';
-import 'package:lingolab/state/selection.dart';
+import 'package:lingolab/state/selectionstate.dart';
 import 'package:provider/provider.dart';
 
 class SubjectList extends StatefulWidget {

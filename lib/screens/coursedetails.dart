@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lingolab/model/chapter.dart';
+import 'package:lingolab/model/chaptermodel.dart';
 import 'package:lingolab/screens/coursedetailtheme.dart';
 import 'package:lingolab/screens/payment.dart';
-import 'package:lingolab/state/selection.dart';
-import 'package:lingolab/state/course.dart';
+import 'package:lingolab/state/selectionstate.dart';
+import 'package:lingolab/state/coursestate.dart';
 import 'package:lingolab/widgets/coursecurriculum.dart';
 import 'package:provider/provider.dart';
 

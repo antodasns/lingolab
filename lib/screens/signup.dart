@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lingolab/screens/loginpage.dart';
 import 'package:lingolab/screens/otp.dart';
-import 'package:lingolab/state/lingonotifiers.dart';
+import 'package:lingolab/state/loginstate.dart';
 import 'package:lingolab/widgets/textfields.dart';
 import 'package:provider/provider.dart';
 class SignUp extends StatefulWidget {
@@ -66,7 +66,7 @@ class _SignUpState extends State<SignUp> {
     _user = result.user;
 
     setState(() {
-      Provider.of<LingoNotifier>(context, listen: false).signIn=true;
+      Provider.of<LoginNotifier>(context, listen: false).signIn=true;
       Navigator.pushNamed(context, "/dashboard");
     });
   }
@@ -75,7 +75,7 @@ class _SignUpState extends State<SignUp> {
     await _auth.signOut().then((onValue) {
       _googleSignIn.signOut();
       setState(() {
-        Provider.of<LingoNotifier>(context, listen: false).signIn=false;
+        Provider.of<LoginNotifier>(context, listen: false).signIn=false;
       });
     });
   }

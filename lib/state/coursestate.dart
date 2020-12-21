@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lingolab/api/chapterapi.dart';
 import 'package:lingolab/api/courseapi.dart';
-import 'package:lingolab/model/chapter.dart';
-import 'package:lingolab/model/course.dart';
+import 'package:lingolab/model/chaptermodel.dart';
+import 'package:lingolab/model/coursemodel.dart';
 
 
 class CourseNotifier with ChangeNotifier{

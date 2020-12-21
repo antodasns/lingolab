@@ -14,9 +14,9 @@ import 'package:lingolab/screens/payment.dart';
 import 'package:lingolab/screens/paymentsuccess.dart';
 import 'package:lingolab/screens/signup.dart';
 import 'package:lingolab/screens/otp.dart';
-import 'package:lingolab/state/course.dart';
-import 'package:lingolab/state/lingonotifiers.dart';
-import 'package:lingolab/state/selection.dart';
+import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/state/loginstate.dart';
+import 'package:lingolab/state/selectionstate.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -24,7 +24,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(
       providers:[
-        ChangeNotifierProvider(create: (_) => LingoNotifier()),
+        ChangeNotifierProvider(create: (_) => LoginNotifier()),
 //        ChangeNotifierProvider(create: (_) => CourseNotifier()),
         ChangeNotifierProvider(create: (_) => SelectionNotifier()),
         ChangeNotifierProvider<CourseNotifier>(

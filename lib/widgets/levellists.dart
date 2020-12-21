@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lingolab/screens/coursedetails.dart';
-import 'package:lingolab/state/course.dart';
-import 'package:lingolab/state/selection.dart';
+import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/state/selectionstate.dart';
 import 'package:provider/provider.dart';
 
 class LevelList extends StatefulWidget {

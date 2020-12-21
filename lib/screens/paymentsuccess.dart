@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lingolab/screens/dashboard.dart';
-import 'package:lingolab/state/course.dart';
-import 'package:lingolab/state/selection.dart';
+import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/state/selectionstate.dart';
 import 'package:provider/provider.dart';
 
 class PaymentSuccess extends StatelessWidget {

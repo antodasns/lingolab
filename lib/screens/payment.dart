@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:lingolab/api/paymentapi.dart';
 import 'package:lingolab/screens/paymentsuccess.dart';
-import 'package:lingolab/state/course.dart';
-import 'package:lingolab/state/selection.dart';
+import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/state/loginstate.dart';
+import 'package:lingolab/state/selectionstate.dart';
 import 'package:provider/provider.dart';
 
 class Payment extends StatefulWidget {
@@ -12,6 +14,7 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
+
   @override
   Widget build(BuildContext context) {
     double appWidth = MediaQuery.of(context).size.width;
@@ -256,6 +259,11 @@ class _PaymentState extends State<Payment> {
                 padding: const EdgeInsets.all(8.0),
                 child: RaisedButton(
                   onPressed: (){
+                    String courseId=Provider.of<SelectionNotifier>(context,listen:false).courseSelected;
+                    String courseLevel=Provider.of<CourseNotifier>(context,listen:false).courseLevel;
+                    String userId=Provider.of<LoginNotifier>(context, listen: false).userId;
+
+                    courseBrought(courseId,courseLevel,userId);
                     Navigator.push(
                         context, MaterialPageRoute(builder: (context) =>
                         PaymentSuccess()

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lingolab/model/chapter.dart';
-import 'package:lingolab/model/course.dart';
+import 'package:lingolab/model/chaptermodel.dart';
+import 'package:lingolab/model/coursemodel.dart';
 //import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lingolab/state/course.dart';
+import 'package:lingolab/state/coursestate.dart';
 import "package:provider/provider.dart";
 import 'dart:convert';
 

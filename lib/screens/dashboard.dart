@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:lingolab/state/course.dart';
+import 'package:lingolab/state/coursestate.dart';
 import 'package:lingolab/widgets/subjectlist.dart';
 import 'package:provider/provider.dart';
 
