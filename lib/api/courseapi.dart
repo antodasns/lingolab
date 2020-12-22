@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lingolab/state/coursestate.dart';
 import "package:provider/provider.dart";
 
-void getCourseListFromFirestore(BuildContext context) async {
+Future<String> getCourseListFromFirestore(BuildContext context) async {
 
   await FirebaseFirestore.instance.collection('courses').get().then((querySnapshot) {
 
@@ -16,7 +16,7 @@ void getCourseListFromFirestore(BuildContext context) async {
 
     Provider.of<CourseNotifier>(context, listen: false).courseList = courseList;
   });
-
+return "asd";
 }
 Course mapFirestoreDocToCourse(document) {
   Course course = Course();

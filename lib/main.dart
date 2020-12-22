@@ -17,6 +17,7 @@ import 'package:lingolab/screens/otp.dart';
 import 'package:lingolab/state/coursestate.dart';
 import 'package:lingolab/state/loginstate.dart';
 import 'package:lingolab/state/selectionstate.dart';
+import 'package:lingolab/widgets/loading.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -39,11 +40,10 @@ class LingoLab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
     return MaterialApp(
       initialRoute: (FirebaseAuth.instance.currentUser!=null)?"/dashboard":"/login",
       routes: {
-        "/pull":(context) => PullToRefresh(),
+        "/pull":(context) => WorkSpace(),
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),
         "/forgotpassword":(context) => ForgotPassword(),

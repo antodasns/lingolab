@@ -1,57 +1,22 @@
-import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-
-
-class PullToRefresh extends StatelessWidget {
+class WorkSpacesss extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Pull To Refresh',
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  var refreshKey = GlobalKey<RefreshIndicatorState>();
-
-  @override
-  void initState() {
-    super.initState();
-    refreshList();
-  }
-
-  Future<Null> refreshList() async {
-    refreshKey.currentState?.show(atTop: false);
-    await Future.delayed(Duration(seconds: 2));
-    setState(() {
-    });
-
-    return null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Pull to refresh"),
-      ),
-      body: RefreshIndicator(
-        key: refreshKey,
-        child: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (context, i) => Text("Fff"),
-        ),
-        onRefresh: refreshList,
+    return Container(
+      color: Colors.white,
+      width: 300.0,
+      height: 300.0,
+      child: SpinKitFadingCircle(
+        itemBuilder: (_, int index) {
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              color: index.isEven ? Colors.red : Colors.green,
+            ),
+          );
+        },
+        size: 120.0,
       ),
     );
   }

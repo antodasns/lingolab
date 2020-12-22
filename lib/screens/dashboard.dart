@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lingolab/api/courseapi.dart';
 import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/widgets/loading.dart';
 import 'package:lingolab/widgets/subjectlist.dart';
 import 'package:provider/provider.dart';
 
@@ -17,21 +18,16 @@ class Dashboard extends StatefulWidget {
 }
 class _DashboardState extends State<Dashboard> {
 
-  void initState() {
-    super.initState();
-    Provider.of<CourseNotifier>(context, listen: false).loadCourseList(context);
-    refreshList();
-  }
-
-  Future<String> callAsyncFetch() => Future.delayed(Duration(milliseconds: 2), () => Provider.of<CourseNotifier>(context, listen: false).courseList[0].courseId);
-
-  var refreshKey = GlobalKey<RefreshIndicatorState>();
-  Future<Null> refreshList() async {
-    refreshKey.currentState?.show(atTop: false);
-    await Future.delayed(Duration(seconds: 2));
-    setState(() {
+  Future<String> loadResult() async{
+    Future<String> result=Future.delayed(Duration(milliseconds: 0),() async{
+      await getCourseListFromFirestore(context);
+      return "Success";
     });
-    return null;
+    return result;
+  }
+  Future<String> fetchResult() async{
+    String resultFetched=await loadResult();
+    return "Done";
   }
 
   @override
@@ -42,7 +38,7 @@ class _DashboardState extends State<Dashboard> {
     double boxappheight2=(appHeight<=700)?appHeight*.1:(appHeight<=775)?appHeight*.09: appHeight*.09;
     var Crsedet=Provider.of<CourseNotifier>(context, listen: false);
     return FutureBuilder<String>(
-        future: callAsyncFetch(),
+        future: fetchResult(),
         builder: (context, AsyncSnapshot<String> snapshot) {
           if (snapshot.hasData) {
             return WillPopScope(
@@ -296,19 +292,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             );
           } else {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text("Pull to refresh"),
-              ),
-              body: RefreshIndicator(
-                key: refreshKey,
-                child: ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, i) => Text("hh"),
-                ),
-                onRefresh: refreshList,
-              ),
-            );
+            return WorkSpace();
           }
         }
     );

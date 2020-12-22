@@ -13,14 +13,14 @@ void getChapterListFromFirestore(BuildContext context,courseid,level) async {
     List<Chapter> chapterList = List<Chapter>();
     List<Chapter> chapterLists = List<Chapter>();
     querySnapshot.docs.forEach((document) {
-      chapterList.add(mapFirestoreDocToChapter(document,courseid,level));
+      chapterList.add(mapFirestoreDocToChapter(document));
       chapterLists=chapterList.where((Chapter chapter) => chapter.courseId ==courseid && chapter.courseLevel ==level).toList();
     });
     Provider.of<CourseNotifier>(context, listen: false).chapterList = chapterLists;
   });
 
 }
-Chapter mapFirestoreDocToChapter(document,courseid,level) {
+Chapter mapFirestoreDocToChapter(document) {
   Chapter chapter = Chapter();
   document.data().forEach((key, value) {
     if (key == 'chapter_id') {

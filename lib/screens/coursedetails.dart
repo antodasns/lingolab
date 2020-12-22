@@ -249,6 +249,7 @@ class _CourseDetailState extends State<CourseDetail>
                             color: DesignCourseAppTheme.nearlyBlack,
                           ),
                           onTap: () {
+                            Provider.of<CourseNotifier>(context, listen: false).purchased="no";
                             Navigator.pop(context);
                           },
                         ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:lingolab/api/paymentapi.dart';
+import 'package:lingolab/screens/chaptersandtests.dart';
 import 'package:lingolab/screens/coursedetails.dart';
 import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/state/loginstate.dart';
 import 'package:lingolab/state/selectionstate.dart';
 import 'package:provider/provider.dart';
 
@@ -15,25 +17,53 @@ class LevelList extends StatefulWidget {
 }
 
 class _LevelListState extends State<LevelList> {
+
   @override
   Widget build(BuildContext context) {
     double appWidth = MediaQuery.of(context).size.width;
     double appHeight = MediaQuery.of(context).size.height;
     double boxappheight=(appHeight<=700)?appHeight*.12:(appHeight<=775)?appHeight*.11: appHeight*.10;
     double boxappheight2=(appHeight<=700)?appHeight*.1:(appHeight<=775)?appHeight*.09: appHeight*.09;
-    String courselevel=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
     return GestureDetector(
       onTap: (){
+        String courseId=Provider.of<SelectionNotifier>(context,listen:false).courseSelected;
+        String userId=Provider.of<LoginNotifier>(context,listen:false).userId;
+        String level=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
+        userPurchase(context,userId,courseId,level);
 
-        String Levels=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
-        String crseslcted=Provider.of<SelectionNotifier>(context,listen:false).courseSelected;
-        Provider.of<CourseNotifier>(context, listen: false).loadDescription(context,crseslcted,Levels);
-        Provider.of<CourseNotifier>(context, listen: false).loadChapterList(context,crseslcted,Levels);
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) =>
-            CourseDetail(level: widget.level,imgloc: widget.imgloc)
-        ));
+        Future<String> loadResult() async{
+          Future<String> result=Future.delayed(Duration(milliseconds: 0),() async{
+            await userPurchase(context,userId,courseId,level);
+            return "Success";
+          });
+          return result;
+        }
+        fetchResult() async{
+          String resultFetched=await loadResult();
+//   ------------------------------------- ---------------------------------------------
+          if(Provider.of<CourseNotifier>(context, listen: false).purchased=="success"){
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) =>
+                ActiveCourse()
+            ));
+          }
+          else{
+            String Levels=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
+            String crseslcted=Provider.of<SelectionNotifier>(context,listen:false).courseSelected;
+            Provider.of<CourseNotifier>(context, listen: false).loadDescription(context,crseslcted,Levels);
+            Provider.of<CourseNotifier>(context, listen: false).loadChapterList(context,crseslcted,Levels);
+
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) =>
+                CourseDetail(level: widget.level,imgloc: widget.imgloc)
+            ));
+          }
+//  ----------------------------------------------------------------------------------------
+        }
+        fetchResult();
+
+
       },
       child: Container(
         width: appWidth*.92,
