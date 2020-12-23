@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lingolab/api/videoebookapi.dart';
 import 'package:lingolab/screens/videosandebooks.dart';
+import 'package:lingolab/state/selectionstate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class Chapters extends StatefulWidget {
   final String chaptername;
-  Chapters({Key key,this.chaptername}):super(key:key);
+  final String chapterid;
+  Chapters({Key key,this.chaptername,this.chapterid}):super(key:key);
   @override
   _ChaptersState createState() => _ChaptersState();
 }
@@ -15,10 +19,24 @@ class _ChaptersState extends State<Chapters> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) =>
-            ChapterDetails()
-        ));
+        Provider.of<SelectionNotifier>(context,listen:false).chapterId=widget.chapterid;
+        Future<String> loadResult() async{
+          Future<String> result=Future.delayed(Duration(milliseconds: 0),() async{
+            await getVideoebookListFromFirestore(context,widget.chapterid);
+            return "Success";
+          });
+          return result;
+        }
+        Future<String> fetchResult() async{
+          String resultFetched=await loadResult();
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) =>
+              ChapterDetails()
+          ));
+          return "Done";
+        }
+        fetchResult();
+
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

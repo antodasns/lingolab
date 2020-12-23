@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lingolab/api/chapterapi.dart';
 import 'package:lingolab/api/courseapi.dart';
+import 'package:lingolab/api/videoebookapi.dart';
 import 'package:lingolab/model/chaptermodel.dart';
 import 'package:lingolab/model/coursemodel.dart';
+import 'package:lingolab/model/videoebookmodel.dart';
 
 
 class CourseNotifier with ChangeNotifier {
@@ -78,11 +80,25 @@ class CourseNotifier with ChangeNotifier {
   //Purchase--------------------------
 
   String _purchased;
-
   String get purchased => _purchased;
 
   set purchased(String selection) {
     _purchased = selection;
+    notifyListeners();
+  }
+
+//Video & Ebook---------------------------------------------------
+
+  List <VideoEbook> _veList = List<VideoEbook>();
+
+  void loadVeList(BuildContext context, chapterid) {
+    getVideoebookListFromFirestore(context, chapterid);
+  }
+
+  List <VideoEbook> get veList => _veList;
+
+  set veList(newValue) {
+    _veList = newValue;
     notifyListeners();
   }
 }

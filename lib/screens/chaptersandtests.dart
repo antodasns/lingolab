@@ -149,16 +149,16 @@ class _ActiveCourseState extends State<ActiveCourse> {
             ),
             for(Chapter x in chapter.chapterList)
 
-            chaptersandtest(x.chapterName),
+            chaptersandtest(x.chapterName,x.chapterId),
 
           ],
         ),
       ),
     );
   }
-Widget chaptersandtest(chapname){
+Widget chaptersandtest(chapname,chapid){
     if (selectedoption=="chapters"){
-    return Chapters(chaptername: chapname,);
+    return Chapters(chaptername: chapname,chapterid:chapid);
     }
     else{
       return Tests(chaptername: "test",);

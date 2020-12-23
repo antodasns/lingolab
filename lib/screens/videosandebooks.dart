@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lingolab/model/videoebookmodel.dart';
+import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/state/selectionstate.dart';
 import 'package:lingolab/widgets/activecoursewidgets.dart';
+import 'package:provider/provider.dart';
 
 
 class ChapterDetails extends StatefulWidget {
@@ -18,6 +22,7 @@ class _ChapterDetailsState extends State<ChapterDetails> {
   Color testheadcolor = Colors.black;
   @override
   Widget build(BuildContext context) {
+    CourseNotifier videoebook = Provider.of<CourseNotifier>(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
@@ -60,7 +65,7 @@ class _ChapterDetailsState extends State<ChapterDetails> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("Introduction",
+                          Text("Introduction"+Provider.of<CourseNotifier>(context, listen: false).veList.first.ebookName,
                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800,color: Colors.white),),
                           SizedBox(height: 10),
                           Row(
@@ -140,24 +145,19 @@ class _ChapterDetailsState extends State<ChapterDetails> {
                 ),
               ],
             ),
-            videosandebook(),
-            videosandebook(),
-            videosandebook(),
-            videosandebook(),
-            videosandebook(),
-            videosandebook(),
-            videosandebook()
+            for(VideoEbook x in videoebook.veList)
+              videosandebook(x.videoName,x.ebookName),
           ],
         ),
       ),
     );
   }
-  Widget videosandebook(){
+  Widget videosandebook(videoname,ebookname){
     if (selectedoption=="videos"){
-      return Videos(chaptername: "Introductionfsbgds",);
+      return Videos(chaptername: videoname,);
     }
     else{
-      return Ebook(chaptername: "Notes",);
+      return Ebook(chaptername: ebookname,);
     }
   }
 

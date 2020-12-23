@@ -7,6 +7,7 @@ class SelectionNotifier with ChangeNotifier{
   String _courseSelected;
   String _courseName;
   String _courseImg;
+  String _chapterId;
 
 
   String get courseSelected => _courseSelected;
@@ -23,6 +24,12 @@ class SelectionNotifier with ChangeNotifier{
   String get courseImg => _courseImg;
   set courseImg(String selection){
     _courseImg = selection;
+    notifyListeners();
+  }
+
+  String get chapterId => _chapterId;
+  set chapterId(String selection){
+    _chapterId = selection;
     notifyListeners();
   }
 
