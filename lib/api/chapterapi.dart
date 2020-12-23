@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lingolab/model/chaptermodel.dart';
-import 'package:lingolab/model/coursemodel.dart';
-//import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lingolab/state/coursestate.dart';
 import "package:provider/provider.dart";
-import 'dart:convert';
 
 void getChapterListFromFirestore(BuildContext context,courseid,level) async {
 

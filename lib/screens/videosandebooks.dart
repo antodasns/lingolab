@@ -11,7 +11,7 @@ class ChapterDetails extends StatefulWidget {
 class _ChapterDetailsState extends State<ChapterDetails> {
   Icon actionIcon = new Icon(Icons.search,color: Colors.black54);
   Widget appBarTitle;
-  String selectedoption="chapters";
+  String selectedoption="videos";
   Color chaplinecolor = Colors.redAccent;
   Color chapheadcolor = Colors.redAccent;
   Color testlinecolor = Colors.white;

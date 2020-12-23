@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lingolab/model/chaptermodel.dart';
+import 'package:lingolab/state/coursestate.dart';
+import 'package:lingolab/state/selectionstate.dart';
 import 'package:lingolab/widgets/activecoursewidgets.dart';
+import 'package:provider/provider.dart';
 
 
 class ActiveCourse extends StatefulWidget {
@@ -18,6 +22,9 @@ class _ActiveCourseState extends State<ActiveCourse> {
   Color testheadcolor = Colors.black;
   @override
   Widget build(BuildContext context) {
+    String level=Provider.of<CourseNotifier>(context,listen:false).courseLevel;
+    String levelName=(level=="a")?"Beginer":(level=="b")?"Intermediate":"Advance";
+    CourseNotifier chapter = Provider.of<CourseNotifier>(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
@@ -60,7 +67,7 @@ class _ActiveCourseState extends State<ActiveCourse> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("English",
+                          Text(Provider.of<SelectionNotifier>(context,listen:false).courseName+"("+levelName+")",
                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800,color: Colors.white),),
                           SizedBox(height: 10),
                           Row(
@@ -81,7 +88,7 @@ class _ActiveCourseState extends State<ActiveCourse> {
                       padding: EdgeInsets.fromLTRB(0,0,10,10),
                       child: CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage("assets/logo/english.png"),
+                        backgroundImage: NetworkImage(Provider.of<SelectionNotifier>(context,listen:false).courseImg),
                         backgroundColor: Colors.transparent,
                       ),
                     ),
@@ -140,21 +147,18 @@ class _ActiveCourseState extends State<ActiveCourse> {
                 ),
               ],
             ),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest(),
-            chaptersandtest()
+            for(Chapter x in chapter.chapterList)
+
+            chaptersandtest(x.chapterName),
+
           ],
         ),
       ),
     );
   }
-Widget chaptersandtest(){
+Widget chaptersandtest(chapname){
     if (selectedoption=="chapters"){
-    return Chapters(chaptername: "Introductionfsbgds",);
+    return Chapters(chaptername: chapname,);
     }
     else{
       return Tests(chaptername: "test",);

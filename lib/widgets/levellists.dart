@@ -43,6 +43,10 @@ class _LevelListState extends State<LevelList> {
           String resultFetched=await loadResult();
 //   ------------------------------------- ---------------------------------------------
           if(Provider.of<CourseNotifier>(context, listen: false).purchased=="success"){
+            String Levels=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
+            String crseslcted=Provider.of<SelectionNotifier>(context,listen:false).courseSelected;
+            Provider.of<CourseNotifier>(context, listen: false).loadDescription(context,crseslcted,Levels);
+            Provider.of<CourseNotifier>(context, listen: false).loadChapterList(context,crseslcted,Levels);
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) =>
                 ActiveCourse()
