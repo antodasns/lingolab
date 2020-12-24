@@ -43,7 +43,7 @@ class LingoLab extends StatelessWidget {
     return MaterialApp(
       initialRoute: (FirebaseAuth.instance.currentUser!=null)?"/dashboard":"/login",
       routes: {
-        "/pull":(context) => WorkSpace(),
+        "/pull":(context) => ChewieDemo(),
         "/login":(context) => LogIn(),
         "/signup":(context) => SignUp(),
         "/forgotpassword":(context) => ForgotPassword(),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lingolab/api/videoebookapi.dart';
+import 'package:lingolab/screens/videoplayback.dart';
 import 'package:lingolab/screens/videosandebooks.dart';
 import 'package:lingolab/state/selectionstate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -206,8 +207,9 @@ class _TestsState extends State<Tests> {
 
 
 class Videos extends StatefulWidget {
-  final String chaptername;
-  Videos({Key key,this.chaptername}):super(key:key);
+  final String vdoname;
+  final String vdourl;
+  Videos({Key key,this.vdoname,this.vdourl}):super(key:key);
   @override
   _VideosState createState() => _VideosState();
 }
@@ -215,70 +217,78 @@ class Videos extends StatefulWidget {
 class _VideosState extends State<Videos> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width*.9,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(4),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 2),
-                  blurRadius: 2,
-                  spreadRadius: 2,
-                  color: Colors.grey[300],
-                ),
-              ],
-            ),
-
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-
-                          Image.asset('assets/logo/A1.png',height: 70,width: 100,)
-                        ],
-                      ),
-                      Container(
-                        width: 15,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0,10,0,10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(widget.chaptername,style: TextStyle(fontSize: 17,color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                                  child: Text("40 Min",style: TextStyle(fontSize: 15,color: Colors.grey,
-                                      fontWeight: FontWeight.w500)),
-                                ),
-
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  )
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) =>
+            VideoPlayback(vdoname:widget.vdoname,vdourl:widget.vdourl)
+        ));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width*.9,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(4),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 2),
+                    blurRadius: 2,
+                    spreadRadius: 2,
+                    color: Colors.grey[300],
+                  ),
                 ],
               ),
+
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+
+                            Image.asset('assets/logo/A1.png',height: 70,width: 100,)
+                          ],
+                        ),
+                        Container(
+                          width: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(widget.vdoname,style: TextStyle(fontSize: 17,color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,10,0,0),
+                                    child: Text("40 Min",style: TextStyle(fontSize: 15,color: Colors.grey,
+                                        fontWeight: FontWeight.w500)),
+                                  ),
+
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -286,8 +296,9 @@ class _VideosState extends State<Videos> {
 
 
 class Ebook extends StatefulWidget {
-  final String chaptername;
-  Ebook({Key key,this.chaptername}):super(key:key);
+  final String ebookname;
+  final String ebookurl;
+  Ebook({Key key,this.ebookname,this.ebookurl}):super(key:key);
   @override
   _EbookState createState() => _EbookState();
 }
@@ -336,7 +347,7 @@ class _EbookState extends State<Ebook> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(widget.chaptername,style: TextStyle(fontSize: 17,color: Colors.black,
+                            Text(widget.ebookname,style: TextStyle(fontSize: 17,color: Colors.black,
                               fontWeight: FontWeight.w500,
                             ),
                             ),

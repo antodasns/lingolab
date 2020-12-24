@@ -146,18 +146,18 @@ class _ChapterDetailsState extends State<ChapterDetails> {
               ],
             ),
             for(VideoEbook x in videoebook.veList)
-              videosandebook(x.videoName,x.ebookName),
+              videosandebook(x.videoName,x.videoUrl,x.ebookName,x.ebookUrl),
           ],
         ),
       ),
     );
   }
-  Widget videosandebook(videoname,ebookname){
+  Widget videosandebook(videoname,vdourl,ebookname,ebookurl){
     if (selectedoption=="videos"){
-      return Videos(chaptername: videoname,);
+      return Videos(vdoname: videoname,vdourl: vdourl,);
     }
     else{
-      return Ebook(chaptername: ebookname,);
+      return Ebook(ebookname: ebookname,ebookurl: ebookurl,);
     }
   }
 
