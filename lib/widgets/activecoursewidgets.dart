@@ -1,10 +1,14 @@
+import 'package:ext_storage/ext_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:lingolab/api/videoebookapi.dart';
 import 'package:lingolab/screens/videoplayback.dart';
 import 'package:lingolab/screens/videosandebooks.dart';
 import 'package:lingolab/state/selectionstate.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class Chapters extends StatefulWidget {
@@ -219,7 +223,7 @@ class _VideosState extends State<Videos> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) =>
             VideoPlayback(vdoname:widget.vdoname,vdourl:widget.vdourl)
         ));
@@ -366,10 +370,31 @@ class _EbookState extends State<Ebook> {
                         ),
                       ),
                       SizedBox(width: 90,),
-                      Column(
-                        children: <Widget>[
-                          Icon(Icons.file_download)
-                        ],
+                      GestureDetector(
+                        onTap: ()async{
+                          final status = await Permission.storage.request();
+
+                          if (status.isGranted) {
+                            final externalDir = await ExtStorage.getExternalStoragePublicDirectory(
+                                ExtStorage.DIRECTORY_DOWNLOADS);
+
+                            final id = await FlutterDownloader.enqueue(
+                              url:widget.ebookurl,
+                              savedDir: externalDir,
+                              showNotification: true,
+                              openFileFromNotification: true,
+                            );
+
+
+                          } else {
+                            print("Permission deined");
+                          }
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.file_download)
+                          ],
+                        ),
                       ),
                     ],
                   )

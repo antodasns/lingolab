@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:lingolab/screens/aa.dart';
 import 'package:lingolab/screens/chaptersandtests.dart';
 import 'package:lingolab/screens/videoplayback.dart';
@@ -23,6 +24,10 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(
+      debug: true // optional: set false to disable printing logs to console
+  );
   runApp(MultiProvider(
       providers:[
         ChangeNotifierProvider(create: (_) => LoginNotifier()),
