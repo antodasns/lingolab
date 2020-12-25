@@ -5,9 +5,12 @@ import 'package:lingolab/state/coursestate.dart';
 import 'package:lingolab/state/selectionstate.dart';
 import 'package:lingolab/widgets/activecoursewidgets.dart';
 import 'package:provider/provider.dart';
+import 'package:lingolab/api/videoebookapi.dart';
 
 
 class ActiveCourse extends StatefulWidget {
+  final String qstnTest;
+  ActiveCourse({Key key,this.qstnTest}):super(key:key);
   @override
   _ActiveCourseState createState() => _ActiveCourseState();
 }
@@ -22,6 +25,9 @@ class _ActiveCourseState extends State<ActiveCourse> {
   Color testheadcolor = Colors.black;
   @override
   Widget build(BuildContext context) {
+
+
+
     String level=Provider.of<CourseNotifier>(context,listen:false).courseLevel;
     String levelName=(level=="a")?"Beginer":(level=="b")?"Intermediate":"Advance";
     CourseNotifier chapter = Provider.of<CourseNotifier>(context);
@@ -72,10 +78,10 @@ class _ActiveCourseState extends State<ActiveCourse> {
                           SizedBox(height: 10),
                           Row(
                             children: <Widget>[
-                              Text("60 Chapters | ",
+                              Text(widget.qstnTest,
                                 style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
-                              Text("35 Tests",
-                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
+//                              Text("35 Tests",
+//                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
                             ],
                           )
                         ],
@@ -158,6 +164,19 @@ class _ActiveCourseState extends State<ActiveCourse> {
   }
 Widget chaptersandtest(chapname,chapid){
     if (selectedoption=="chapters"){
+
+      Future<String> loadResult() async{
+        Future<String> result=Future.delayed(Duration(milliseconds: 0),() async{
+          await getVideoebookListfullFromFirestore(context);
+          return "Success";
+        });
+        return result;
+      }
+      Future<String> fetchResult() async{
+        String resultFetched=await loadResult();
+        return "Done";
+      }
+      fetchResult();
     return Chapters(chaptername: chapname,chapterid:chapid);
     }
     else{

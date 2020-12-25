@@ -8,6 +8,9 @@ import 'package:provider/provider.dart';
 
 
 class ChapterDetails extends StatefulWidget {
+  final String chapname;
+  final String vdoebocount;
+  ChapterDetails({Key key,this.chapname,this.vdoebocount}):super(key:key);
   @override
   _ChapterDetailsState createState() => _ChapterDetailsState();
 }
@@ -65,14 +68,12 @@ class _ChapterDetailsState extends State<ChapterDetails> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("Introduction"+Provider.of<CourseNotifier>(context, listen: false).veList.first.ebookName,
+                          Text(widget.chapname,
                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800,color: Colors.white),),
                           SizedBox(height: 10),
                           Row(
                             children: <Widget>[
-                              Text("60 Videos | ",
-                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
-                              Text("35 E-Books",
+                              Text(widget.vdoebocount,
                                 style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white),),
                             ],
                           )

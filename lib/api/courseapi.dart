@@ -43,6 +43,15 @@ Course mapFirestoreDocToCourse(document) {
     if (key == 'cprice') {
       course.cprice = value;
     }
+    if (key == 'aqstntest') {
+      course.aqstntest = value;
+    }
+    if (key == 'bqstntest') {
+      course.bqstntest = value;
+    }
+    if (key == 'cqstntest') {
+      course.cqstntest = value;
+    }
 
   });
 

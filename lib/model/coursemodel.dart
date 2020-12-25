@@ -17,6 +17,9 @@ class Course {
     this.aprice,
     this.bprice,
     this.cprice,
+    this.aqstntest,
+    this.bqstntest,
+    this.cqstntest,
   });
 
   String courseId;
@@ -26,6 +29,9 @@ class Course {
   String aprice;
   String bprice;
   String cprice;
+  String aqstntest;
+  String bqstntest;
+  String cqstntest;
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
     courseId: json["course_id"],
@@ -35,6 +41,9 @@ class Course {
     aprice: json["aprice"],
     bprice: json["bprice"],
     cprice: json["cprice"],
+    aqstntest: json["aqstntest"],
+    bqstntest: json["bqstntest"],
+    cqstntest: json["cqstntest"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -45,5 +54,8 @@ class Course {
     "aprice": aprice,
     "bprice": bprice,
     "cprice": cprice,
+    "aqstntest": aqstntest,
+    "bqstntest": bqstntest,
+    "cqstntest": cqstntest,
   };
 }

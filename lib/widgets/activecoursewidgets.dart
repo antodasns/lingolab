@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:lingolab/api/videoebookapi.dart';
+import 'package:lingolab/model/videoebookmodel.dart';
 import 'package:lingolab/screens/videoplayback.dart';
 import 'package:lingolab/screens/videosandebooks.dart';
 import 'package:lingolab/state/selectionstate.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:lingolab/state/coursestate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,14 @@ class Chapters extends StatefulWidget {
 class _ChaptersState extends State<Chapters> {
   @override
   Widget build(BuildContext context) {
+    List<VideoEbook> velst = Provider.of<CourseNotifier>(context,listen:false).veListfull;
+    List<VideoEbook> velsts = List<VideoEbook>();
+    List<VideoEbook> vido = List<VideoEbook>();
+    List<VideoEbook> ebo = List<VideoEbook>();
+    velsts=velst.where((VideoEbook vels) => vels.chapterId ==widget.chapterid).toList();
+    vido=velsts.where((VideoEbook vels) => vels.videoName !=null).toList();
+    ebo=velsts.where((VideoEbook vels) => vels.ebookName !=null).toList();
+    String vdoebocount=vido.length.toString()+" Videos | "+ebo.length.toString()+" E-books";
     return GestureDetector(
       onTap: (){
         Provider.of<SelectionNotifier>(context,listen:false).chapterId=widget.chapterid;
@@ -36,7 +45,7 @@ class _ChaptersState extends State<Chapters> {
           String resultFetched=await loadResult();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) =>
-              ChapterDetails()
+              ChapterDetails(chapname: widget.chaptername,vdoebocount: vdoebocount)
           ));
           return "Done";
         }
@@ -100,7 +109,7 @@ class _ChaptersState extends State<Chapters> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text("30 Videos | 10 E-books",style: TextStyle(fontSize: 15,color: Colors.grey,
+                            Text(vdoebocount,style: TextStyle(fontSize: 15,color: Colors.grey,
                                 fontWeight: FontWeight.w500)),
                             Padding(
                               padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*.25,0,0,0),

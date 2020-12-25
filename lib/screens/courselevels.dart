@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lingolab/state/selectionstate.dart';
+import 'package:lingolab/state/coursestate.dart';
 import 'package:lingolab/widgets/levellists.dart';
 import 'package:provider/provider.dart';
+import 'package:lingolab/model/coursemodel.dart';
 class Courselevels extends StatefulWidget {
   final String imglocation;
   const Courselevels ({Key key,this.imglocation}):super(key:key);
@@ -19,6 +21,10 @@ class _CourselevelsState extends State<Courselevels> {
     double appHeight = MediaQuery.of(context).size.height;
     double boxappheight=(appHeight<=700)?appHeight*.12:(appHeight<=775)?appHeight*.11: appHeight*.10;
     double boxappheight2=(appHeight<=700)?appHeight*.1:(appHeight<=775)?appHeight*.09: appHeight*.09;
+    String courseid=Provider.of<SelectionNotifier>(context,listen:false).courseSelected;
+    List<Course> crlst = Provider.of<CourseNotifier>(context,listen:false).courseList;;
+    List<Course> crlsts = List<Course>();
+    crlsts=crlst.where((Course crse) => crse.courseId ==courseid).toList();
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
@@ -70,16 +76,16 @@ class _CourselevelsState extends State<Courselevels> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                          children: <Widget>[
                            Text(Provider.of<SelectionNotifier>(context,listen:false).courseName,
-                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800,color: Colors.white)),
+                             style: TextStyle(fontSize: 25,fontWeight: FontWeight.w800,color: Colors.white)),
                            SizedBox(height: 10),
-                           Row(
-                            children: <Widget>[
-                              Text("60 Chapters | ",
-                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white)),
-                              Text("35 Tests",
-                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white)),
-                            ],
-                           )
+//                           Row(
+//                            children: <Widget>[
+//                              Text("60 Chapters | ",
+//                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white)),
+//                              Text("35 Tests",
+//                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.white)),
+//                            ],
+//                           )
                          ],
                         ),
                       ),
@@ -99,11 +105,11 @@ class _CourselevelsState extends State<Courselevels> {
                 ),
             ),
             SizedBox(height:50),
-            LevelList(level:"Beginer",leveldisc:"60 Chapters | 35 Tests",imgloc:"assets/logo/A1.png"),
+            LevelList(level:"Beginer",leveldisc:crlsts.first.aqstntest,imgloc:"assets/logo/A1.png"),
             SizedBox(height:50),
-            LevelList(level:"Intermediate",leveldisc:"60 Chapters | 35 Tests",imgloc:"assets/logo/B1.png"),
+            LevelList(level:"Intermediate",leveldisc:crlsts.first.bqstntest,imgloc:"assets/logo/B1.png"),
             SizedBox(height:50),
-            LevelList(level:"Advance",leveldisc:"60 Chapters | 35 Tests",imgloc:"assets/logo/C1.png"),
+            LevelList(level:"Advance",leveldisc:crlsts.first.cqstntest,imgloc:"assets/logo/C1.png"),
           ],
         ),
       ),

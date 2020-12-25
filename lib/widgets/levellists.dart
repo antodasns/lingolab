@@ -31,7 +31,6 @@ class _LevelListState extends State<LevelList> {
         String level=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
         userPurchase(context,userId,courseId,level);
 
-
         Future<String> loadResult() async{
           Future<String> result=Future.delayed(Duration(milliseconds: 0),() async{
             await userPurchase(context,userId,courseId,level);
@@ -49,7 +48,7 @@ class _LevelListState extends State<LevelList> {
             Provider.of<CourseNotifier>(context, listen: false).loadChapterList(context,crseslcted,Levels);
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) =>
-                ActiveCourse()
+                ActiveCourse(qstnTest: widget.leveldisc,)
             ));
           }
           else{
@@ -66,7 +65,6 @@ class _LevelListState extends State<LevelList> {
 //  ----------------------------------------------------------------------------------------
         }
         fetchResult();
-
 
       },
       child: Container(

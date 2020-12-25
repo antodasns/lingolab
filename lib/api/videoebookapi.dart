@@ -18,6 +18,18 @@ Future<String> getVideoebookListFromFirestore(BuildContext context,chapterid) as
   });
   return "bhhh";
 }
+Future<String> getVideoebookListfullFromFirestore(BuildContext context) async {
+
+  await FirebaseFirestore.instance.collection('video_ebook').get().then((querySnapshot) {
+    List<VideoEbook> veList = List<VideoEbook>();
+    List<VideoEbook> veLists = List<VideoEbook>();
+    querySnapshot.docs.forEach((document) {
+      veList.add(mapFirestoreDocToVideoebook(document));
+    });
+    Provider.of<CourseNotifier>(context, listen: false).veListfull = veList;
+  });
+  return "bhhh";
+}
 VideoEbook mapFirestoreDocToVideoebook(document) {
   VideoEbook videoebook = VideoEbook();
   document.data().forEach((key, value) {

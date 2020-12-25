@@ -101,4 +101,17 @@ class CourseNotifier with ChangeNotifier {
     _veList = newValue;
     notifyListeners();
   }
+
+  List <VideoEbook> _veListfull = List<VideoEbook>();
+
+  void loadVeListfull(BuildContext context) {
+    getVideoebookListfullFromFirestore(context);
+  }
+
+  List <VideoEbook> get veListfull => _veListfull;
+
+  set veListfull(newValue) {
+    _veListfull = newValue;
+    notifyListeners();
+  }
 }
