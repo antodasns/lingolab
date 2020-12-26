@@ -51,6 +51,15 @@ VideoEbook mapFirestoreDocToVideoebook(document) {
     if (key == 'ebook_url') {
       videoebook.ebookUrl = value;
     }
+    if (key == 'ebookpages') {
+      videoebook.ebookpages = value;
+    }
+    if (key == 'ebooksize') {
+      videoebook.ebooksize = value;
+    }
+    if (key == 'videolength') {
+      videoebook.videolength = value;
+    }
   }
   );
   return videoebook;

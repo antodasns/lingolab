@@ -11,6 +11,8 @@ import 'package:lingolab/state/coursestate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
 
 class Chapters extends StatefulWidget {
   final String chaptername;
@@ -222,19 +224,28 @@ class _TestsState extends State<Tests> {
 class Videos extends StatefulWidget {
   final String vdoname;
   final String vdourl;
-  Videos({Key key,this.vdoname,this.vdourl}):super(key:key);
+  final String videolength;
+  Videos({Key key,this.vdoname,this.vdourl,this.videolength}):super(key:key);
   @override
   _VideosState createState() => _VideosState();
 }
 
 class _VideosState extends State<Videos> {
   @override
+  Future<String> fetchResult() async{
+    String resultFetched=widget.vdoname;
+    return resultFetched;
+  }
   Widget build(BuildContext context) {
+    return FutureBuilder<String>(
+        future: fetchResult(),
+    builder: (context, AsyncSnapshot<String> snapshot) {
+    if (snapshot.hasData) {
     return GestureDetector(
       onTap: (){
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) =>
-            VideoPlayback(vdoname:widget.vdoname,vdourl:widget.vdourl)
+            VideoPlayback(vdoname:widget.vdoname,vdourl:widget.vdourl,vdolength:widget.videolength)
         ));
       },
       child: Padding(
@@ -285,7 +296,7 @@ class _VideosState extends State<Videos> {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                                    child: Text("40 Min",style: TextStyle(fontSize: 15,color: Colors.grey,
+                                    child: Text(widget.videolength+" Min",style: TextStyle(fontSize: 15,color: Colors.grey,
                                         fontWeight: FontWeight.w500)),
                                   ),
 
@@ -304,6 +315,11 @@ class _VideosState extends State<Videos> {
         ),
       ),
     );
+    } else {
+      return emptyWidget();
+    }
+    }
+    );
   }
 }
 
@@ -311,14 +327,30 @@ class _VideosState extends State<Videos> {
 class Ebook extends StatefulWidget {
   final String ebookname;
   final String ebookurl;
-  Ebook({Key key,this.ebookname,this.ebookurl}):super(key:key);
+  final String ebookpages;
+  final String ebooksize;
+  Ebook({Key key,this.ebookname,this.ebookurl,this.ebookpages,this.ebooksize}):super(key:key);
   @override
   _EbookState createState() => _EbookState();
 }
 
 class _EbookState extends State<Ebook> {
   @override
+
+  Future<String> fetchsize() async{
+    http.Response r = await http.get(widget.ebookurl);
+    final file_size = r.headers["content-length"];
+    return file_size;
+  }
+  Future<String> fetchResult() async{
+    String resultFetched=widget.ebookname;
+    return resultFetched;
+  }
   Widget build(BuildContext context) {
+    return FutureBuilder<String>(
+        future: fetchResult(),
+    builder: (context, AsyncSnapshot<String> snapshot) {
+    if (snapshot.hasData) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -369,7 +401,7 @@ class _EbookState extends State<Ebook> {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                                  child: Text("30 Pages | 3.4 MB",style: TextStyle(fontSize: 15,color: Colors.grey,
+                                  child: Text(widget.ebookpages+" Pages | "+widget.ebooksize+" MB",style: TextStyle(fontSize: 15,color: Colors.grey,
                                       fontWeight: FontWeight.w500)),
                                 ),
 
@@ -389,11 +421,11 @@ class _EbookState extends State<Ebook> {
 
                             final id = await FlutterDownloader.enqueue(
                               url:widget.ebookurl,
+                              fileName: widget.ebookname,
                               savedDir: externalDir,
                               showNotification: true,
                               openFileFromNotification: true,
                             );
-
 
                           } else {
                             print("Permission deined");
@@ -414,5 +446,22 @@ class _EbookState extends State<Ebook> {
         ],
       ),
     );
+    } else {
+      return emptyWidget();
+    }
+    }
+    );
+  }
+}
+
+class emptyWidget extends StatefulWidget {
+  @override
+  _emptyWidgetState createState() => _emptyWidgetState();
+}
+
+class _emptyWidgetState extends State<emptyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

@@ -147,18 +147,18 @@ class _ChapterDetailsState extends State<ChapterDetails> {
               ],
             ),
             for(VideoEbook x in videoebook.veList)
-              videosandebook(x.videoName,x.videoUrl,x.ebookName,x.ebookUrl),
+              videosandebook(x.videoName,x.videoUrl,x.videolength,x.ebookName,x.ebookUrl,x.ebookpages,x.ebooksize),
           ],
         ),
       ),
     );
   }
-  Widget videosandebook(videoname,vdourl,ebookname,ebookurl){
+  Widget videosandebook(videoname,vdourl,videolength,ebookname,ebookurl,ebookpages,ebooksize){
     if (selectedoption=="videos"){
-      return Videos(vdoname: videoname,vdourl: vdourl,);
+      return Videos(vdoname: videoname,videolength: videolength,vdourl: vdourl);
     }
     else{
-      return Ebook(ebookname: ebookname,ebookurl: ebookurl,);
+      return Ebook(ebookname: ebookname,ebookurl: ebookurl,ebookpages:ebookpages,ebooksize:ebooksize);
     }
   }
 

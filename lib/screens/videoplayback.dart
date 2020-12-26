@@ -7,72 +7,38 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:chewie/src/chewie_player.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayback extends StatefulWidget {
   final String vdoname;
   final String vdourl;
-  VideoPlayback({Key key,this.vdoname,this.vdourl}):super(key:key);
+  final String vdolength;
+  VideoPlayback({Key key,this.vdoname,this.vdourl,this.vdolength}):super(key:key);
   @override
   _VideoPlaybackState createState() => _VideoPlaybackState();
 }
 
 class _VideoPlaybackState extends State<VideoPlayback> {
+YoutubePlayerController _controller;
+void runYoutubePlayer(){
+  _controller=YoutubePlayerController(initialVideoId: YoutubePlayer.convertUrlToId(widget.vdourl),
+  flags: YoutubePlayerFlags(
+    enableCaption: false,
+    isLive: false,
 
-  TargetPlatform _platform;
-  VideoPlayerController _videoPlayerController1;
-  VideoPlayerController _videoPlayerController2;
-  ChewieController _chewieController;
+  )
+  );
+}
 
   @override
   void initState() {
+  runYoutubePlayer();
     super.initState();
-    _videoPlayerController1 = VideoPlayerController.network(
-        widget.vdourl);
-    _videoPlayerController2 = VideoPlayerController.network(
-        'https://www.sample-videos.com/video123/mp4/480/big_buck_bunny_480p_20mb.mp4');
-    _chewieController = ChewieController(
-        videoPlayerController: _videoPlayerController1,
-        aspectRatio: 3 / 2,
-        autoPlay: true,
-        looping: true,
-        routePageBuilder: (BuildContext context, Animation<double> animation,
-            Animation<double> secondAnimation, provider) {
-          return AnimatedBuilder(
-            animation: animation,
-            builder: (BuildContext context, Widget child) {
-              return Scaffold(
-                resizeToAvoidBottomPadding: false,
-                body: Container(
-                  alignment: Alignment.center,
-                  color: Colors.black,
-                  child: provider,
-                ),
-              );
-
-            },
-          );
-        }
-      // Try playing around with some of these other options:
-
-      // showControls: false,
-      // materialProgressColors: ChewieProgressColors(
-      //   playedColor: Colors.red,
-      //   handleColor: Colors.blue,
-      //   backgroundColor: Colors.grey,
-      //   bufferedColor: Colors.lightGreen,
-      // ),
-      // placeholder: Container(
-      //   color: Colors.grey,
-      // ),
-      // autoInitialize: true,
-    );
   }
 
   @override
   void dispose() {
-    _videoPlayerController1.dispose();
-    _videoPlayerController2.dispose();
-    _chewieController.dispose();
+   _controller.pause();
     super.dispose();
   }
 
@@ -81,57 +47,62 @@ class _VideoPlaybackState extends State<VideoPlayback> {
   @override
   Widget build(BuildContext context) {
     CourseNotifier videoebook = Provider.of<CourseNotifier>(context);
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: Colors.transparent,
-        bottomOpacity: 0.0,
-        elevation: 0.0,
-        title: appBarTitle,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.share,color: Colors.white),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.favorite_border,color: Colors.white),
-          ),
-        ],
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: _controller,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 350,
-              child: Center(
-                child: Chewie(
-                  controller: _chewieController,
-                ),
-              ),
-            ),
+        builder:(context,player){
+         return Scaffold(
+           resizeToAvoidBottomPadding: false,
+           extendBodyBehindAppBar: true,
+           appBar: AppBar(
+             leading: IconButton(
+               icon: Icon(Icons.arrow_back, color: Colors.white),
+               onPressed: () => Navigator.of(context).pop(),
+             ),
+             backgroundColor: Colors.transparent,
+             bottomOpacity: 0.0,
+             elevation: 0.0,
+             title: appBarTitle,
+             actions: <Widget>[
+               Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Icon(Icons.share,color: Colors.white),
+               ),
+               Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Icon(Icons.favorite_border,color: Colors.white),
+               ),
+             ],
+           ),
+           body: SingleChildScrollView(
+             child: Column(
+               children: <Widget>[
+                 Container(
+                   height: 280,
+                   child: Center(
+                     child: player
+                   ),
+                 ),
 
 
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Text("Related videos",style: TextStyle(fontSize: 15,color: Colors.black,
-                      fontWeight: FontWeight.w900)),
-                ),
-              ],
-            ),
-            for(VideoEbook x in videoebook.veList)
-              Videos(vdoname:x.videoName,vdourl:x.videoUrl),
-          ],
-        ),
-      ),
-    );
+                 Row(
+                   children: <Widget>[
+                     Padding(
+                       padding: const EdgeInsets.all(18.0),
+                       child: Text("Related videos",style: TextStyle(fontSize: 15,color: Colors.black,
+                           fontWeight: FontWeight.w900)),
+                     ),
+                   ],
+                 ),
+                 for(VideoEbook x in videoebook.veList)
+                   Videos(vdoname:x.videoName,vdourl:x.videoUrl,videolength:x.videolength),
+               ],
+             ),
+           ),
+         );
+        }
+      );
   }
 
   Widget searchIcon(){

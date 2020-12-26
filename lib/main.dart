@@ -24,7 +24,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  WidgetsFlutterBinding.ensureInitialized();
+
   await FlutterDownloader.initialize(
       debug: true // optional: set false to disable printing logs to console
   );
