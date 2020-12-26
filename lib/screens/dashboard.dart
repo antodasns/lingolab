@@ -32,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(context) {
+    String userinfo=FirebaseAuth.instance.currentUser.uid;
     double appWidth = MediaQuery.of(context).size.width;
     double appHeight = MediaQuery.of(context).size.height;
     double boxappheight=(appHeight<=700)?appHeight*.12:(appHeight<=775)?appHeight*.11: appHeight*.10;

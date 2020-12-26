@@ -18,7 +18,6 @@ import 'package:lingolab/screens/otp.dart';
 import 'package:lingolab/state/coursestate.dart';
 import 'package:lingolab/state/loginstate.dart';
 import 'package:lingolab/state/selectionstate.dart';
-import 'package:lingolab/widgets/loading.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

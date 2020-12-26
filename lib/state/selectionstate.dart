@@ -8,6 +8,9 @@ class SelectionNotifier with ChangeNotifier{
   String _courseName;
   String _courseImg;
   String _chapterId;
+  String _vdoselectId;
+  String _vdoebocount;
+  String _chapName;
 
 
   String get courseSelected => _courseSelected;
@@ -30,6 +33,23 @@ class SelectionNotifier with ChangeNotifier{
   String get chapterId => _chapterId;
   set chapterId(String selection){
     _chapterId = selection;
+    notifyListeners();
+  }
+
+  String get vdoselectId => _vdoselectId;
+  set vdoselectId(String selection){
+    _vdoselectId = selection;
+    notifyListeners();
+  }
+
+  String get vdoebocount => _vdoebocount;
+  set vdoebocount(String selection){
+    _vdoebocount = selection;
+    notifyListeners();
+  }
+  String get chapName => _chapName;
+  set chapName(String selection){
+    _chapName = selection;
     notifyListeners();
   }
 

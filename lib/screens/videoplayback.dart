@@ -4,10 +4,9 @@ import 'package:lingolab/model/videoebookmodel.dart';
 import 'package:lingolab/state/coursestate.dart';
 import 'package:lingolab/widgets/activecoursewidgets.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
-import 'package:chewie/src/chewie_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:lingolab/state/selectionstate.dart';
+import 'package:lingolab/screens/videosandebooks.dart';
 
 class VideoPlayback extends StatefulWidget {
   final String vdoname;
@@ -52,52 +51,66 @@ void runYoutubePlayer(){
         controller: _controller,
       ),
         builder:(context,player){
-         return Scaffold(
-           resizeToAvoidBottomPadding: false,
-           extendBodyBehindAppBar: true,
-           appBar: AppBar(
-             leading: IconButton(
-               icon: Icon(Icons.arrow_back, color: Colors.white),
-               onPressed: () => Navigator.of(context).pop(),
-             ),
-             backgroundColor: Colors.transparent,
-             bottomOpacity: 0.0,
-             elevation: 0.0,
-             title: appBarTitle,
-             actions: <Widget>[
-               Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: Icon(Icons.share,color: Colors.white),
+         return WillPopScope(
+           onWillPop: () {
+             Navigator.pushReplacement(
+                 context, MaterialPageRoute(builder: (context) =>
+                 ChapterDetails(chapname: Provider.of<SelectionNotifier>(context,listen: false).chapName,vdoebocount:  Provider.of<SelectionNotifier>(context,listen: false).vdoebocount)
+             ));
+             Provider.of<SelectionNotifier>(context,listen: false).vdoselectId="";
+             return Future.value(false);
+           },
+           child: Scaffold(
+             resizeToAvoidBottomPadding: false,
+             extendBodyBehindAppBar: true,
+             appBar: AppBar(
+               leading: IconButton(
+                 icon: Icon(Icons.arrow_back, color: Colors.white),
+                   onPressed: () {
+                     Navigator.pushReplacement(
+                         context, MaterialPageRoute(builder: (context) =>
+                         ChapterDetails(chapname: Provider.of<SelectionNotifier>(context,listen: false).chapName,vdoebocount:  Provider.of<SelectionNotifier>(context,listen: false).vdoebocount)
+                     ));
+                     Provider.of<SelectionNotifier>(context,listen: false).vdoselectId="";
+                   }
                ),
-               Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: Icon(Icons.favorite_border,color: Colors.white),
-               ),
-             ],
-           ),
-           body: SingleChildScrollView(
-             child: Column(
-               children: <Widget>[
-                 Container(
-                   height: 280,
-                   child: Center(
-                     child: player
-                   ),
+               backgroundColor: Colors.transparent,
+               bottomOpacity: 0.0,
+               elevation: 0.0,
+               title: appBarTitle,
+               actions: <Widget>[
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Icon(Icons.share,color: Colors.white),
                  ),
-
-
-                 Row(
-                   children: <Widget>[
-                     Padding(
-                       padding: const EdgeInsets.all(18.0),
-                       child: Text("Related videos",style: TextStyle(fontSize: 15,color: Colors.black,
-                           fontWeight: FontWeight.w900)),
-                     ),
-                   ],
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Icon(Icons.favorite_border,color: Colors.white),
                  ),
-                 for(VideoEbook x in videoebook.veList)
-                   Videos(vdoname:x.videoName,vdourl:x.videoUrl,videolength:x.videolength),
                ],
+             ),
+             body: SingleChildScrollView(
+               child: Column(
+                 children: <Widget>[
+                   Container(
+                     height: 280,
+                     child: Center(
+                       child: player
+                     ),
+                   ),
+                   Row(
+                     children: <Widget>[
+                       Padding(
+                         padding: const EdgeInsets.all(18.0),
+                         child: Text("Related videos",style: TextStyle(fontSize: 15,color: Colors.black,
+                             fontWeight: FontWeight.w900)),
+                       ),
+                     ],
+                   ),
+                   for(VideoEbook x in videoebook.veList)
+                     Videos(vdoid:x.veId,vdoname:x.videoName,vdourl:x.videoUrl,videolength:x.videolength),
+                 ],
+               ),
              ),
            ),
          );

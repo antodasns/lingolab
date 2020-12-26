@@ -45,6 +45,8 @@ class _ChaptersState extends State<Chapters> {
         }
         Future<String> fetchResult() async{
           String resultFetched=await loadResult();
+          Provider.of<SelectionNotifier>(context,listen: false).vdoebocount=vdoebocount;
+          Provider.of<SelectionNotifier>(context,listen: false).chapName=widget.chaptername;
           Navigator.push(
               context, MaterialPageRoute(builder: (context) =>
               ChapterDetails(chapname: widget.chaptername,vdoebocount: vdoebocount)
@@ -222,10 +224,11 @@ class _TestsState extends State<Tests> {
 
 
 class Videos extends StatefulWidget {
+  final String vdoid;
   final String vdoname;
   final String vdourl;
   final String videolength;
-  Videos({Key key,this.vdoname,this.vdourl,this.videolength}):super(key:key);
+  Videos({Key key,this.vdoid,this.vdoname,this.vdourl,this.videolength}):super(key:key);
   @override
   _VideosState createState() => _VideosState();
 }
@@ -237,12 +240,15 @@ class _VideosState extends State<Videos> {
     return resultFetched;
   }
   Widget build(BuildContext context) {
+    String playing;
+    (widget.vdoid==Provider.of<SelectionNotifier>(context,listen: false).vdoselectId)?playing="yes":playing="no";
     return FutureBuilder<String>(
         future: fetchResult(),
     builder: (context, AsyncSnapshot<String> snapshot) {
     if (snapshot.hasData) {
     return GestureDetector(
       onTap: (){
+        Provider.of<SelectionNotifier>(context,listen: false).vdoselectId=widget.vdoid;
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) =>
             VideoPlayback(vdoname:widget.vdoname,vdourl:widget.vdourl,vdolength:widget.videolength)
@@ -267,47 +273,50 @@ class _VideosState extends State<Videos> {
                 ],
               ),
 
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-
-                            Image.asset('assets/logo/A1.png',height: 70,width: 100,)
-                          ],
-                        ),
-                        Container(
-                          width: 15,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0,10,0,10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+              child: Container(
+                color: (playing=="yes")?Colors.grey[200]:Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Column(
                             children: <Widget>[
-                              Text(widget.vdoname,style: TextStyle(fontSize: 17,color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                                    child: Text(widget.videolength+" Min",style: TextStyle(fontSize: 15,color: Colors.grey,
-                                        fontWeight: FontWeight.w500)),
-                                  ),
 
-                                ],
-                              )
+                              Image.asset('assets/logo/A1.png',height: 70,width: 100,)
                             ],
                           ),
-                        )
-                      ],
-                    )
-                  ],
+                          Container(
+                            width: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(widget.vdoname,style: TextStyle(fontSize: 17,color: (playing=="yes")?Colors.red:Colors.black,
+                                  fontWeight: (playing=="yes")?FontWeight.w600:FontWeight.w500,
+                                ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(0,10,0,0),
+                                      child: Text((playing=="yes")?"Playing Now..":widget.videolength+" Min",style: TextStyle(fontSize: 15,color: Colors.grey,
+                                          fontWeight: FontWeight.w500)),
+                                    ),
+
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

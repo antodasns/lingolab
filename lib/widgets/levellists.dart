@@ -3,7 +3,7 @@ import 'package:lingolab/api/paymentapi.dart';
 import 'package:lingolab/screens/chaptersandtests.dart';
 import 'package:lingolab/screens/coursedetails.dart';
 import 'package:lingolab/state/coursestate.dart';
-import 'package:lingolab/state/loginstate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lingolab/state/selectionstate.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class _LevelListState extends State<LevelList> {
     return GestureDetector(
       onTap: (){
         String courseId=Provider.of<SelectionNotifier>(context,listen:false).courseSelected;
-        String userId=Provider.of<LoginNotifier>(context,listen:false).userId;
+        String userId=FirebaseAuth.instance.currentUser.uid;
         String level=(widget.level=="Beginer")?"a":(widget.level=="Intermediate")?"b":"c";
         userPurchase(context,userId,courseId,level);
 
