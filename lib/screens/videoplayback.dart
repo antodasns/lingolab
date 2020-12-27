@@ -61,8 +61,8 @@ void runYoutubePlayer(){
              return Future.value(false);
            },
            child: Scaffold(
-             resizeToAvoidBottomPadding: false,
-             extendBodyBehindAppBar: true,
+             resizeToAvoidBottomPadding: true,
+             extendBodyBehindAppBar: false,
              appBar: AppBar(
                leading: IconButton(
                  icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -74,7 +74,7 @@ void runYoutubePlayer(){
                      Provider.of<SelectionNotifier>(context,listen: false).vdoselectId="";
                    }
                ),
-               backgroundColor: Colors.transparent,
+               backgroundColor: Colors.deepOrangeAccent,
                bottomOpacity: 0.0,
                elevation: 0.0,
                title: appBarTitle,
@@ -93,7 +93,6 @@ void runYoutubePlayer(){
                child: Column(
                  children: <Widget>[
                    Container(
-                     height: 280,
                      child: Center(
                        child: player
                      ),
